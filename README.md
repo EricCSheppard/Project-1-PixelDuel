@@ -9,10 +9,10 @@ Pixel duel is a lo-fi fencing game created as an homage to old freeware games of
 ---
 ## Technologies used
 ---
-HTML
-Canvas
-Javascript
-CSS
+    HTML
+    Canvas
+    Javascript
+    CSS
 ---
 
 ## User Stories
