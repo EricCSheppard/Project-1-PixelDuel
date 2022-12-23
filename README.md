@@ -25,9 +25,9 @@ Pixel duel is a lo-fi fencing game created as an homage to old freeware games of
 ## Wireframes
 ---
 
-![pixel duel 1](img/PixelDuel1.jpg)
-![pixel duel 2](img/PixelDuel2.jpg)
-![pixel duel 3](img/PixelDuel3.jpg)
-![pixel duel 4](img/PixelDuel4.jpg)
-![pixel duel 5](img/PixelDuel5.jpg)
-![pixel duel 6](img/PixelDuel6.jpg)
+![pixel duel 1](https://i.imgur.com/PYOoopK.jpeg)
+![pixel duel 2](https://i.imgur.com/D9TKe5A.jpeg)
+![pixel duel 3](https://i.imgur.com/qxxwraB.jpeg)
+![pixel duel 4](https://i.imgur.com/U0O1t2L.jpeg)
+![pixel duel 5](https://i.imgur.com/83vgGp8.jpeg)
+![pixel duel 6](https://i.imgur.com/y3YSNd7.jpeg)
