@@ -43,6 +43,7 @@ class Sword {
         this.width = width
         this.height = height
         this.color = color
+        this.thrust = false
         this.render = function () {
             ctx.fillstyle = this.color
             ctx.fillRect(this.x, this.y, this.width, this.height)
@@ -65,21 +66,23 @@ const movementHandler = (e) => {
     switch (e.keyCode) {
         // Player 1 move left
         case (65):
-            player1.x -= 20;
-            // player1Sword.x = -= 20;
+            player1.x -= 20
+            player1Sword.x -= 20 
             break
         // Player 1 move right
         case (68):
             player1.x += 20
-            // player1Sword.x += 20
+            player1Sword.x += 20
             break
         // Player 2 move left
         case (37):
             player2.x -= 20
+            player2Sword.x -= 20
             break
         // Player 2 move right
         case (39):
             player2.x += 20
+            player2Sword.x += 20
             break
     }
 }
