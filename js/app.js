@@ -64,22 +64,22 @@ const player2Sword = new Sword(850, 510, 120, 20, 'green')
 
 const movementHandler = (e) => {
     switch (e.keyCode) {
-        // Player 1 move left
+        // Player 1 plus sword move left
         case (65):
             player1.x -= 20
             player1Sword.x -= 20 
             break
-        // Player 1 move right
+        // Player 1 plus sword move right
         case (68):
             player1.x += 20
             player1Sword.x += 20
             break
-        // Player 2 move left
+        // Player 2 plus sword move left
         case (37):
             player2.x -= 20
             player2Sword.x -= 20
             break
-        // Player 2 move right
+        // Player 2 plus sword move right
         case (39):
             player2.x += 20
             player2Sword.x += 20
@@ -89,6 +89,13 @@ const movementHandler = (e) => {
 
 // ATTACK FUNCTION --------------------------
 
+// const attackDefendHandler = (e) => {
+//     switch (e.keyCode) {
+//         case (86):
+//             player1Sword.x += 70
+//         break
+//     }
+// }
 
 
 // GAME LOOP ---------------------------------
@@ -109,6 +116,18 @@ const gameLoop = () => {
 
 }
 
+// EVENT LISTENERS --------------------------
+
+document.addEventListener('keydown', movementHandler)
+// document.addEventListener('keydown', attackDefendHandler)
+
+document.addEventListener('keyup', (e) => {
+    //when a key is released, call unset direction.
+    //this needs to be handled in a slightly different way
+    if (['v', 'c', ',', '.'].includes(e.key)) {
+        
+    }
+})
 
 
 
@@ -119,7 +138,7 @@ const gameInterval = setInterval(gameLoop, 30)
 const stopGameLoop = () => { clearInterval(gameInterval)}
 
 document.addEventListener('DOMContentLoaded', function () {
-    document.addEventListener('keydown', movementHandler)
+    
     
     // game loop interval
 gameInterval    
