@@ -6,21 +6,25 @@
 
 Pixel duel is a lo-fi fencing game created as an homage to old freeware games of the early DOS gaming era.  It features a simultaneous 2 player VS mode played side by side on a single keyboard.  The gameplay is enhanced by an 8-bit inspired sountrack and synthesized sound effects.  Duel it out with a friend to see who is the champion!
 
----
+
 ## Technologies used
 ---
     HTML
     Canvas
     Javascript
     CSS
----
 
+---
 ## User Stories
 
 
 
     As a user, I want the ability to choose my character color
-    As a user, I want the ability to control my character in a responsive way
+    As a user, I want the ability to press 'a' or 'd' to move my character left or right for player 1
+    As a user, I want the ability to press left arrow or right arrow to move my character left or right for player 2
+    As a user, I want the ability to press 'w' for player 1 or up arrow for player 2 to parry
+    As a user, I want the ability to press 'd' for player 1 or down arrow for player 2 to crouch
+    As a user, I want the ability to press left control for player 1 or right control for player 2 to thrust my sword
     As a user, I want the ability to see my remaining health indicated
     As a user, I want the ability to see how many wins or loses I have
     As a user, I want the ability to select different backgrounds/stages
