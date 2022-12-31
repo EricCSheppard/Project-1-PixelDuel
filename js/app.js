@@ -1,4 +1,5 @@
 // console.log('hiya world')
+// SETUP ---------------------------------------------
 
 // Grabbing all of the elements for reference.
 
@@ -56,8 +57,8 @@ class Sword {
 
 // creates the players and the swords
 
-const player1 = new Fencer(200, 450, 80, 120, 'green')
-const player1Sword = new Sword(200, 490, 100, 20, 'green')
+const player1 = new Fencer(300, 450, 80, 120, 'green')
+const player1Sword = new Sword(300, 490, 100, 20, 'green')
 
 const player2 = new Fencer(900, 450, 80, 120, 'blue')
 const player2Sword = new Sword(880, 511, 100, 20, 'blue')
@@ -97,8 +98,8 @@ const movementHandler = (e) => {
 const pressedKeys = [];
 
 const attackHandler = (e) => {
-    var isRepeating = !!pressedKeys[e.keyCode];
-    pressedKeys[e.keyCode] = true;
+    const isRepeating = !!pressedKeys[e.keyCode]
+    pressedKeys[e.keyCode] = true
     switch (e.keyCode) {
         // causes the swords to thrust when pushed.
         case !isRepeating && 86:
@@ -133,6 +134,9 @@ const swordReturn = function (key) {
     if (key.toLowerCase() == '/') { player2Sword.y += 50, player2Sword.width = 100, player2Sword.height = 20, player2.invul = false}   
 }
 
+
+// HIT DETECTION------------------------------------------
+
 // Universal hit detection for swords on bodies (probably won't work due to having to move the players in different directions.)
 
 // const detectHit = (attackerSword, defender) => {
@@ -156,6 +160,7 @@ const detectHit1 = () => {
         && player1Sword.x + player1Sword.width > player2.x
         && player1Sword.y < player2.y + player2.height
         && player1Sword.y + player1Sword.height > player2.y
+        // negates the body hit box if player is parrying
         && player2.invul == false ) {
         console.log('Player 2 HIT!')
         player2.x += 100
@@ -173,6 +178,9 @@ const detectHit1 = () => {
         player1Sword.x -= 70
         player2.x += 70
         player2Sword.x += 70
+        // Flashes background grey for a parry.
+        document.getElementById('container').style.backgroundColor = 'grey'
+        // document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)';
         }    
 }
 
@@ -194,6 +202,16 @@ const detectHit2 = () => {
 }
 
 
+const checkOffStage = (player) => {
+    // checks if a player is offstage and deducts health
+    if (player.x < 0 || player.x + player.width > game.width) {
+        console.log('Return to stage!')
+        player.health -= 1
+    }
+    
+
+}
+
 // GAME LOOP ---------------------------------
 
 const gameLoop = () => {
@@ -203,19 +221,33 @@ const gameLoop = () => {
 
 
     if (player1.health > 0) {
-    // render players and swords
+    // render player1 and sword
     player1.render()
     player1Sword.render()
     detectHit1()
-    }
+    checkOffStage(player1)
+    } 
+    // code to end the game with a player win.
+    // else {
+    //     console.log('Player 2 wins!')
+    //     stopGameLoop()
+    // }
     if (player2.health > 0) {
-    // render players and swords
+    // render player2 and sword
     player2.render()
     player2Sword.render()
-    detectHit2()    
-    }
+    detectHit2()
+    checkOffStage(player2)
+    } 
+    // code to end the game with a player win.
+    // else {
+    //     console.log('Player 1 wins!')
+    //     stopGameLoop()
+    // }
 
 }
+
+
 
 // EVENT LISTENERS --------------------------
 
@@ -225,7 +257,10 @@ document.addEventListener('keydown', attackHandler)
 document.addEventListener('keyup', (e) => {
     if (['a', 'v', 'c', '.', '/'].includes(e.key)) {
         swordReturn(e.key)
+        // clears list of pressed keys when key is released.
         pressedKeys[e.keyCode] = false;
+        // sets background color after flash
+        document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)'
     }
 })
 
@@ -234,12 +269,9 @@ document.addEventListener('keyup', (e) => {
 // INTERVAL ----------------------------------
 
 const gameInterval = setInterval(gameLoop, 30)
-
 const stopGameLoop = () => { clearInterval(gameInterval)}
 
 document.addEventListener('DOMContentLoaded', function () {
-    
-    
     // game loop interval
-gameInterval    
+    gameInterval  
 })
