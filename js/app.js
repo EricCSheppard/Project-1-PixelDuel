@@ -93,25 +93,28 @@ const movementHandler = (e) => {
 
 // ATTACK / DEFEND FUNCTIONS --------------------------
 
+const pressedKeys = [];
 
 const attackHandler = (e) => {
+    var isRepeating = !!pressedKeys[e.keyCode];
+    pressedKeys[e.keyCode] = true;
     switch (e.keyCode) {
         // causes the swords to thrust when pushed.
-        case (86):
+        case !isRepeating && 86:
             player1Sword.x += 70
         break
-        case (190):
+        case !isRepeating && 190:
             player2Sword.x -= 70
         break
         // causes the swords to parry when pushed.
-        case (67):
+        case !isRepeating && 67:
             player1Sword.x += 80
             player1Sword.y -= 20
             player1Sword.width = 20
             player1Sword.height = 100
             player1.invul = true
         break
-        case (191):
+        case !isRepeating && 191:
             // player2Sword.x += 40
             player2Sword.y -= 50
             player2Sword.width = 20
@@ -127,7 +130,7 @@ const swordReturn = function (key) {
     if (key.toLowerCase() == '.') { player2Sword.x += 70 }
     // returns swords after parry
     if (key.toLowerCase() == 'c') { player1Sword.x -= 80, player1Sword.y += 20, player1Sword.width = 100, player1Sword.height = 20}
-    if (key.toLowerCase() == '/') { player2Sword.y += 50, player2Sword.width = 100, player2Sword.height = 20}
+    if (key.toLowerCase() == '/') { player2Sword.y += 50, player2Sword.width = 100, player2Sword.height = 20}   
 }
 
 
@@ -155,8 +158,9 @@ document.addEventListener('keydown', movementHandler)
 document.addEventListener('keydown', attackHandler)
 
 document.addEventListener('keyup', (e) => {
-    if (['v', 'c', '.', '/'].includes(e.key)) {
+    if (['a', 'v', 'c', '.', '/'].includes(e.key)) {
         swordReturn(e.key)
+        pressedKeys[e.keyCode] = false;
     }
 })
 
