@@ -52,10 +52,10 @@ class Sword {
 }
 
 const player1 = new Fencer(200, 450, 80, 120, 'green')
-const player1Sword = new Sword(210, 490, 120, 20, 'green')
+const player1Sword = new Sword(200, 490, 100, 20, 'green')
 
 const player2 = new Fencer(900, 450, 80, 120, 'blue')
-const player2Sword = new Sword(850, 510, 120, 20, 'blue')
+const player2Sword = new Sword(880, 511, 100, 20, 'blue')
 
 
 // Need to set up a movement handler for each player.
@@ -90,7 +90,7 @@ const movementHandler = (e) => {
 // ATTACK FUNCTION --------------------------
 
 // causes the sword to thrust when pushed.
-const attackDefendHandler = (e) => {
+const attackHandler = (e) => {
     switch (e.keyCode) {
         case (86):
             player1Sword.x += 70
@@ -99,6 +99,11 @@ const attackDefendHandler = (e) => {
             player2Sword.x -= 70
         break
     }   
+}
+
+const swordReturn = function (key) {
+    if (key.toLowerCase() == 'v') { player1Sword.x -= 70 }
+    if (key.toLowerCase() == '.') { player2Sword.x += 70 }
 }
 
 
@@ -123,12 +128,13 @@ const gameLoop = () => {
 // EVENT LISTENERS --------------------------
 
 document.addEventListener('keydown', movementHandler)
-document.addEventListener('keydown', attackDefendHandler)
+document.addEventListener('keydown', attackHandler)
 
 document.addEventListener('keyup', (e) => {
     //when a key is released, call unset direction.
     //this needs to be handled in a slightly different way
     if (['v', 'c', ',', '.'].includes(e.key)) {
+        swordReturn(e.key)
     }
 })
 
