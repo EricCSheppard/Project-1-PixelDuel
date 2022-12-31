@@ -218,8 +218,8 @@ const gameLoop = () => {
     // clear the screen
     ctx.clearRect(0,0, game.width, game.height)
 
-    const playerOneStatus = document.getElementById('player1status').innerText = `Player 1 Health - ${player1.health}`
-    const playerTwoStatus = document.getElementById('player2status').innerText = `Player 2 Health - ${player2.health}`
+    const playerOneStatus = document.getElementById('player1status').innerText = ` * Player 1 Health - ${player1.health} *`
+    const playerTwoStatus = document.getElementById('player2status').innerText = `* Player 2 Health - ${player2.health} *`
 
     if (player1.health > 0) {
     // render player1 and sword
