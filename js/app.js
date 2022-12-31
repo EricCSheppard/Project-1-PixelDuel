@@ -116,7 +116,6 @@ const attackHandler = (e) => {
             player1.invul = true
         break
         case !isRepeating && 191:
-            // player2Sword.x += 40
             player2Sword.y -= 50
             player2Sword.width = 20
             player2Sword.height = 100
@@ -134,19 +133,65 @@ const swordReturn = function (key) {
     if (key.toLowerCase() == '/') { player2Sword.y += 50, player2Sword.width = 100, player2Sword.height = 20, player2.invul = false}   
 }
 
-const detectHit = (attackerSword, defender) => {
+// Universal hit detection for swords on bodies (probably won't work due to having to move the players in different directions.)
 
-    if (attackerSword.x < defender.x + defender.width
-        && attackerSword.x + attackerSword.width > defender.x
-        && attackerSword.y < defender.y + defender.height
-        && attackerSword.y + attackerSword.height > defender.y
-        && defender.invul == false ) {
-        console.log('HIT!')
-        
-            
+// const detectHit = (attackerSword, defender) => {
+
+//     if (attackerSword.x < defender.x + defender.width
+//         && attackerSword.x + attackerSword.width > defender.x
+//         && attackerSword.y < defender.y + defender.height
+//         && attackerSword.y + attackerSword.height > defender.y
+//         && defender.invul == false ) {
+//         console.log('HIT!')
+//         defender 
+//         }
+// }
+
+// Individual hit detection for either player
+
+const detectHit1 = () => {
+
+    // player 1 hits player 2
+    if (player1Sword.x < player2.x + player2.width
+        && player1Sword.x + player1Sword.width > player2.x
+        && player1Sword.y < player2.y + player2.height
+        && player1Sword.y + player1Sword.height > player2.y
+        && player2.invul == false ) {
+        console.log('Player 2 HIT!')
+        player2.x += 100
+        player2Sword.x += 100
+        player2.health -= 20
+        console.log(`Player 2's health is now ${player2.health}`)
         }
+    // two swords connecting equals a parry
+    if (player2Sword.x < player1Sword.x + player1Sword.width
+        && player2Sword.x + player2Sword.width > player1Sword.x
+        && player2Sword.y < player1Sword.y + player1Sword.height
+        && player2Sword.y + player2Sword.height > player1Sword.y) {
+        console.log('Parry!')
+        player1.x -= 70
+        player1Sword.x -= 70
+        player2.x += 70
+        player2Sword.x += 70
+        }    
 }
 
+const detectHit2 = () => {
+
+    // player 2 hits player 1
+    if (player2Sword.x < player1.x + player1.width
+        && player2Sword.x + player2Sword.width > player1.x
+        && player2Sword.y < player1.y + player1.height
+        && player2Sword.y + player2Sword.height > player1.y
+        && player1.invul == false ) {
+        console.log('Player 1 HIT!')
+        player1.x -= 100
+        player1Sword.x -= 100
+        player1.health -= 20
+        console.log (`Player 1's health is now ${player1.health}`)
+        }
+        // parry hit detection in detectHit1 works for both players
+}
 
 
 // GAME LOOP ---------------------------------
@@ -161,17 +206,14 @@ const gameLoop = () => {
     // render players and swords
     player1.render()
     player1Sword.render()
-    detectHit(player1Sword, player2)
+    detectHit1()
     }
     if (player2.health > 0) {
-        // render players and swords
-        player2.render()
-        player2Sword.render()
-        detectHit(player2Sword, player1)
-        }
-
-
-
+    // render players and swords
+    player2.render()
+    player2Sword.render()
+    detectHit2()    
+    }
 
 }
 
