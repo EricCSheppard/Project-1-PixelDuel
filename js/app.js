@@ -1,11 +1,9 @@
 // console.log('hiya world')
 // SETUP ---------------------------------------------
 
-// Grabbing all of the elements for reference.
+// Grabs the canvas.
 
 const game = document.getElementById('canvas')
-const playerOneStatus = document.getElementById('player1status')
-const playerTwoStatus = document.getElementById('player2status')
 
 // Set context of game to 2d
 
@@ -17,6 +15,7 @@ game.setAttribute('width', getComputedStyle(game)['width'])
 game.setAttribute('height', getComputedStyle(game)['height'])
 
 game.height = 600
+
 
 // class for fencers
 
@@ -219,6 +218,8 @@ const gameLoop = () => {
     // clear the screen
     ctx.clearRect(0,0, game.width, game.height)
 
+    const playerOneStatus = document.getElementById('player1status').innerText = `Player 1 Health - ${player1.health}`
+    const playerTwoStatus = document.getElementById('player2status').innerText = `Player 2 Health - ${player2.health}`
 
     if (player1.health > 0) {
     // render player1 and sword
