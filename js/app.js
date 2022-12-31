@@ -93,6 +93,7 @@ const movementHandler = (e) => {
 
 // ATTACK / DEFEND FUNCTIONS --------------------------
 
+//create array for pressed keys to stop repeating keystrokes
 const pressedKeys = [];
 
 const attackHandler = (e) => {
@@ -129,24 +130,46 @@ const swordReturn = function (key) {
     if (key.toLowerCase() == 'v') { player1Sword.x -= 70 }
     if (key.toLowerCase() == '.') { player2Sword.x += 70 }
     // returns swords after parry
-    if (key.toLowerCase() == 'c') { player1Sword.x -= 80, player1Sword.y += 20, player1Sword.width = 100, player1Sword.height = 20}
-    if (key.toLowerCase() == '/') { player2Sword.y += 50, player2Sword.width = 100, player2Sword.height = 20}   
+    if (key.toLowerCase() == 'c') { player1Sword.x -= 80, player1Sword.y += 20, player1Sword.width = 100, player1Sword.height = 20, player1.invul = false}
+    if (key.toLowerCase() == '/') { player2Sword.y += 50, player2Sword.width = 100, player2Sword.height = 20, player2.invul = false}   
 }
+
+const detectHit = (attackerSword, defender) => {
+
+    if (attackerSword.x < defender.x + defender.width
+        && attackerSword.x + attackerSword.width > defender.x
+        && attackerSword.y < defender.y + defender.height
+        && attackerSword.y + attackerSword.height > defender.y
+        && defender.invul == false ) {
+        console.log('HIT!')
+        
+            
+        }
+}
+
 
 
 // GAME LOOP ---------------------------------
 
 const gameLoop = () => {
 
- // first clear the screen
+    // clear the screen
     ctx.clearRect(0,0, game.width, game.height)
 
 
+    if (player1.health > 0) {
+    // render players and swords
     player1.render()
     player1Sword.render()
+    detectHit(player1Sword, player2)
+    }
+    if (player2.health > 0) {
+        // render players and swords
+        player2.render()
+        player2Sword.render()
+        detectHit(player2Sword, player1)
+        }
 
-    player2.render()
-    player2Sword.render()
 
 
 
