@@ -103,9 +103,11 @@ const attackHandler = (e) => {
         // causes the swords to thrust when pushed.
         case !isRepeating && 86:
             player1Sword.x += 70
+            player1Sword.thrust = true
         break
         case !isRepeating && 190:
             player2Sword.x -= 70
+            player2Sword.thrust = true
         break
         // causes the swords to parry when pushed.
         case !isRepeating && 67:
@@ -126,8 +128,8 @@ const attackHandler = (e) => {
 
 const swordReturn = function (key) {
     // returns swords after attack
-    if (key.toLowerCase() == 'v') { player1Sword.x -= 70 }
-    if (key.toLowerCase() == '.') { player2Sword.x += 70 }
+    if (key.toLowerCase() == 'v') { player1Sword.x -= 70, player1Sword.thrust = false }
+    if (key.toLowerCase() == '.') { player2Sword.x += 70, player2Sword.thrust = false }
     // returns swords after parry
     if (key.toLowerCase() == 'c') { player1Sword.x -= 80, player1Sword.y += 20, player1Sword.width = 100, player1Sword.height = 20, player1.invul = false}
     if (key.toLowerCase() == '/') { player2Sword.y += 50, player2Sword.width = 100, player2Sword.height = 20, player2.invul = false}   
@@ -160,11 +162,15 @@ const detectHit1 = () => {
         && player1Sword.y < player2.y + player2.height
         && player1Sword.y + player1Sword.height > player2.y
         // negates the body hit box if player is parrying
-        && player2.invul == false ) {
+        && player2.invul == false
+        // makes sure player is attacking so there is no hit when players simply walk into each other.
+        && player1Sword.thrust == true ) {
         console.log('Player 2 HIT!')
         player2.x += 100
         player2Sword.x += 100
         player2.health -= 20
+        // flash screen red when there is a hit
+        document.getElementById('container').style.backgroundColor = 'red'
         console.log(`Player 2's health is now ${player2.health}`)
         }
     // two swords connecting equals a parry
@@ -190,11 +196,14 @@ const detectHit2 = () => {
         && player2Sword.x + player2Sword.width > player1.x
         && player2Sword.y < player1.y + player1.height
         && player2Sword.y + player2Sword.height > player1.y
-        && player1.invul == false ) {
+        && player1.invul == false
+        && player2Sword.thrust == true ) {
         console.log('Player 1 HIT!')
         player1.x -= 100
         player1Sword.x -= 100
         player1.health -= 20
+        // flash screen red when there is a hit
+        document.getElementById('container').style.backgroundColor = 'red'
         console.log (`Player 1's health is now ${player1.health}`)
         }
         // parry hit detection in detectHit1 works for both players
