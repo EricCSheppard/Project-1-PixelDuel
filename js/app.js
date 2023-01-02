@@ -165,28 +165,38 @@ const detectHit1 = () => {
         && player2.invul == false
         // makes sure player is attacking so there is no hit when players simply walk into each other.
         && player1Sword.thrust == true ) {
-        console.log('Player 2 HIT!')
-        player2.x += 100
-        player2Sword.x += 100
-        player2.health -= 20
-        // flash screen red when there is a hit
-        document.getElementById('container').style.backgroundColor = 'red'
-        console.log(`Player 2's health is now ${player2.health}`)
+            console.log('Player 2 HIT!')
+            player2.x += 100
+            player2Sword.x += 100
+            player2.health -= 20
+            // flash screen red when there is a hit
+            document.getElementById('container').style.backgroundColor = 'red'
+            console.log(`Player 2's health is now ${player2.health}`)
         }
     // two swords connecting equals a parry
     if (player2Sword.x < player1Sword.x + player1Sword.width
         && player2Sword.x + player2Sword.width > player1Sword.x
         && player2Sword.y < player1Sword.y + player1Sword.height
         && player2Sword.y + player2Sword.height > player1Sword.y) {
-        console.log('Parry!')
-        player1.x -= 70
-        player1Sword.x -= 70
-        player2.x += 70
-        player2Sword.x += 70
-        // Flashes background grey for a parry.
-        document.getElementById('container').style.backgroundColor = 'grey'
-        // document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)';
+            console.log('Parry!')
+            player1.x -= 70
+            player1Sword.x -= 70
+            player2.x += 70
+            player2Sword.x += 70
+            // Flashes background grey for a parry.
+            document.getElementById('container').style.backgroundColor = 'grey'
+            // document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)';
         }    
+    // two players colliding while not attacking or defending
+    if (player1.x < player2.x + player2.width
+        && player1.x + player1.width > player2.x
+        && player1.y < player2.y + player2.height
+        && player1.y + player1.height > player2.y) {
+            player1.x -= 70
+            player1Sword.x -= 70
+            player2.x += 70
+            player2Sword.x += 70
+        }
 }
 
 const detectHit2 = () => {
@@ -278,7 +288,7 @@ document.addEventListener('keyup', (e) => {
 
 // INTERVAL ----------------------------------
 
-const gameInterval = setInterval(gameLoop, 30)
+const gameInterval = setInterval(gameLoop, 60)
 const stopGameLoop = () => { clearInterval(gameInterval)}
 
 document.addEventListener('DOMContentLoaded', function () {
