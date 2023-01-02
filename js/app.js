@@ -73,7 +73,7 @@ function sound(src) {
 
 
 const sndParry = new sound('sounds/parry.wav')
-const sndSwish = new sound('sounds/Swish2.wav')
+// const sndSwish = new sound('sounds/Swish2.wav')
 const sndHit = new sound('sounds/Hit.wav')
 
 // creates the players and the swords
@@ -81,8 +81,8 @@ const sndHit = new sound('sounds/Hit.wav')
 const player1 = new Fencer(300, 450, 80, 120, 'green')
 const player1Sword = new Sword(300, 490, 100, 20, 'green')
 
-const player2 = new Fencer(900, 450, 80, 120, 'blue')
-const player2Sword = new Sword(880, 511, 100, 20, 'blue')
+const player2 = new Fencer(900, 450, 80, 120, 'red')
+const player2Sword = new Sword(880, 511, 100, 20, 'red')
 
 
 
@@ -127,13 +127,13 @@ const attackHandler = (e) => {
             player1Sword.x += 70
             player1Sword.thrust = true
             // Play swish sound
-            sndSwish.play()
+            // sndSwish.play()
         break
         case !isRepeating && 190:
             player2Sword.x -= 70
             player2Sword.thrust = true
             // Play swish sound
-            sndSwish.play()
+            // sndSwish.play()
         break
         // causes the swords to parry when pushed.
         case !isRepeating && 67:
@@ -266,8 +266,11 @@ const gameLoop = () => {
     // clear the screen
     ctx.clearRect(0,0, game.width, game.height)
 
-    const playerOneStatus = document.getElementById('player1status').innerText = ` * Player 1 Health - ${player1.health} *`
-    const playerTwoStatus = document.getElementById('player2status').innerText = `* Player 2 Health - ${player2.health} *`
+    document.getElementById('player1status').innerText = `* Player 1 - ${player1.health} *`
+    document.getElementById('player1status').style.color = player1.color
+    
+    document.getElementById('player2status').innerText = `* Player 2 - ${player2.health} *`
+    document.getElementById('player2status').style.color = player2.color
 
     if (player1.health > 0) {
     // render player1 and sword
@@ -277,10 +280,11 @@ const gameLoop = () => {
     checkOffStage(player1)
     } 
     // code to end the game with a player win.
-    // else {
-    //     console.log('Player 2 wins!')
-    //     stopGameLoop()
-    // }
+    else {
+        document.getElementById('msg').innerText = 'Player 2 Wins!'
+        stopGameLoop()
+        document.getElementById('container').style.backgroundColor = player2.color
+    }
     if (player2.health > 0) {
     // render player2 and sword
     player2.render()
@@ -289,10 +293,11 @@ const gameLoop = () => {
     checkOffStage(player2)
     } 
     // code to end the game with a player win.
-    // else {
-    //     console.log('Player 1 wins!')
-    //     stopGameLoop()
-    // }
+    else {
+        document.getElementById('msg').innerText = 'Player 1 Wins!'
+        stopGameLoop()
+        document.getElementById('container').style.backgroundColor = player1.color
+    }   
 
 }
 
@@ -308,7 +313,7 @@ document.addEventListener('keyup', (e) => {
         swordReturn(e.key)
         // clears list of pressed keys when key is released.
         pressedKeys[e.keyCode] = false;
-        // sets background color after flash
+        // resets background color after flash
         document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)'
     }
 })
