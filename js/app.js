@@ -6,6 +6,14 @@
 
 const game = document.getElementById('canvas')
 
+const reset = document.createElement('div')
+reset.id = 'reset'
+reset.style.background = 'grey'
+reset.innerText = 'reset'
+reset.style.textAlign = 'center'
+reset.style.height = '100px'
+reset.style.width = '100px'
+
 // Set context of game to 2d
 
 const ctx = game.getContext('2d')
@@ -71,7 +79,7 @@ function sound(src) {
     }
 }
 
-
+// Define the sounds used in the game
 const sndParry = new sound('sounds/parry.wav')
 // const sndSwish = new sound('sounds/Swish2.wav')
 const sndHit = new sound('sounds/Hit.wav')
@@ -81,8 +89,8 @@ const sndHit = new sound('sounds/Hit.wav')
 const player1 = new Fencer(300, 450, 80, 120, 'green')
 const player1Sword = new Sword(300, 490, 100, 20, 'green')
 
-const player2 = new Fencer(900, 450, 80, 120, 'red')
-const player2Sword = new Sword(880, 511, 100, 20, 'red')
+const player2 = new Fencer(900, 450, 80, 120, 'lightblue')
+const player2Sword = new Sword(880, 511, 100, 20, 'lightblue')
 
 
 
@@ -284,6 +292,8 @@ const gameLoop = () => {
         document.getElementById('msg').innerText = 'Player 2 Wins!'
         stopGameLoop()
         document.getElementById('container').style.backgroundColor = player2.color
+        document.getElementById('player1status').innerText = `XXXXXXXXXX`
+        document.getElementById('container').appendChild(reset)
     }
     if (player2.health > 0) {
     // render player2 and sword
@@ -297,13 +307,14 @@ const gameLoop = () => {
         document.getElementById('msg').innerText = 'Player 1 Wins!'
         stopGameLoop()
         document.getElementById('container').style.backgroundColor = player1.color
+        document.getElementById('player2status').innerText = `XXXXXXXXXX`
+        document.getElementById('container').appendChild(reset)   
     }   
 
 }
 
-
-
 // EVENT LISTENERS --------------------------
+
 
 document.addEventListener('keydown', movementHandler)
 document.addEventListener('keydown', attackHandler)
@@ -327,5 +338,5 @@ const stopGameLoop = () => { clearInterval(gameInterval)}
 
 document.addEventListener('DOMContentLoaded', function () {
     // game loop interval
-    gameInterval  
+    gameInterval
 })
