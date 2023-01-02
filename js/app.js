@@ -1,4 +1,5 @@
 // console.log('hiya world')
+
 // SETUP ---------------------------------------------
 
 // Grabs the canvas.
@@ -53,6 +54,27 @@ class Sword {
         }
     }
 }
+// SOUNDS ----------------------------------------------------  
+
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+        this.sound.play();
+    }
+    this.stop = function(){
+        this.sound.pause();
+    }
+}
+
+
+const sndParry = new sound('sounds/parry.wav')
+const sndSwish = new sound('sounds/Swish2.wav')
+const sndHit = new sound('sounds/Hit.wav')
 
 // creates the players and the swords
 
@@ -104,10 +126,14 @@ const attackHandler = (e) => {
         case !isRepeating && 86:
             player1Sword.x += 70
             player1Sword.thrust = true
+            // Play swish sound
+            sndSwish.play()
         break
         case !isRepeating && 190:
             player2Sword.x -= 70
             player2Sword.thrust = true
+            // Play swish sound
+            sndSwish.play()
         break
         // causes the swords to parry when pushed.
         case !isRepeating && 67:
@@ -165,6 +191,7 @@ const detectHit1 = () => {
         && player2.invul == false
         // makes sure player is attacking so there is no hit when players simply walk into each other.
         && player1Sword.thrust == true ) {
+            sndHit.play()
             console.log('Player 2 HIT!')
             player2.x += 100
             player2Sword.x += 100
@@ -179,6 +206,7 @@ const detectHit1 = () => {
         && player2Sword.y < player1Sword.y + player1Sword.height
         && player2Sword.y + player2Sword.height > player1Sword.y) {
             console.log('Parry!')
+            sndParry.play()
             player1.x -= 70
             player1Sword.x -= 70
             player2.x += 70
@@ -208,13 +236,14 @@ const detectHit2 = () => {
         && player2Sword.y + player2Sword.height > player1.y
         && player1.invul == false
         && player2Sword.thrust == true ) {
-        console.log('Player 1 HIT!')
-        player1.x -= 100
-        player1Sword.x -= 100
-        player1.health -= 20
-        // flash screen red when there is a hit
-        document.getElementById('container').style.backgroundColor = 'red'
-        console.log (`Player 1's health is now ${player1.health}`)
+            sndHit.play()
+            console.log('Player 1 HIT!')
+            player1.x -= 100
+            player1Sword.x -= 100
+            player1.health -= 20
+            // flash screen red when there is a hit
+            document.getElementById('container').style.backgroundColor = 'red'
+            console.log (`Player 1's health is now ${player1.health}`)
         }
         // parry hit detection in detectHit1 works for both players
 }
