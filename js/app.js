@@ -265,10 +265,10 @@ const checkOffStage = (player) => {
     }
 }
 
-// GAME LOOP ---------------------------------
+// GAME LOOP ---------------------------------------
 
 const gameLoop = () => {
-
+    
     // clear the screen
     ctx.clearRect(0,0, game.width, game.height)
 
@@ -308,7 +308,6 @@ const gameLoop = () => {
         document.getElementById('player2status').innerText = `XXXXXXXXXX`
         document.getElementById('container').appendChild(reset)   
     }   
-
 }
 
 
@@ -334,16 +333,24 @@ document.addEventListener('keyup', (e) => {
 
 // INTERVAL ----------------------------------
 
-const gameInterval = setInterval(gameLoop, 30)
+let gameInterval
+
 const stopGameLoop = () => { clearInterval(gameInterval)}
+
+const runGameLoop = () => { 
+    gameInterval = setInterval(gameLoop, 30)
+    reset.addEventListener('click', resetGame)
+}
+
+
+// remove this if you want the reset to appear after a player wins
 document.getElementById('container').appendChild(reset)
-// document.addEventListener('DOMContentLoaded', function () {
-//     // game loop interval
-//     gameInterval
-// })
+
+// document.addEventListener('DOMContentLoaded', runGameLoop)
 
 const resetGame = () => {
-    console.log('clicked reset')
+    document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)'
+    // console.log('clicked reset')
     player1.health = 100
     player1.x = 300
     player1Sword.x = 300
@@ -351,8 +358,9 @@ const resetGame = () => {
     player2.x = 900
     player2Sword.x = 880
     pressedKeys = []
-    console.log(player1.health)
-    // gameInterval
+    // console.log(player1.health)
+    reset.removeEventListener('click', resetGame)
+    runGameLoop()
 }
-
 reset.addEventListener('click', resetGame)
+
