@@ -6,7 +6,7 @@
 
 const game = document.getElementById('canvas')
 
-const reset = document.createElement('div')
+const reset = document.createElement('button')
 reset.id = 'reset'
 reset.style.background = 'grey'
 reset.innerText = 'reset'
@@ -109,12 +109,12 @@ const movementHandler = (e) => {
             player1Sword.x += 20
             break
         // Player 2 plus sword move left
-        case (37):
+        case (74):
             player2.x -= 20
             player2Sword.x -= 20
             break
         // Player 2 plus sword move right
-        case (39):
+        case (76):
             player2.x += 20
             player2Sword.x += 20
             break
@@ -124,34 +124,34 @@ const movementHandler = (e) => {
 // ATTACK / DEFEND FUNCTIONS --------------------------
 
 //create array for pressed keys to stop repeating keystrokes
-const pressedKeys = [];
+let pressedKeys = [];
 
 const attackHandler = (e) => {
     const isRepeating = !!pressedKeys[e.keyCode]
     pressedKeys[e.keyCode] = true
     switch (e.keyCode) {
         // causes the swords to thrust when pushed.
-        case !isRepeating && 86:
+        case !isRepeating && 87:
             player1Sword.x += 70
             player1Sword.thrust = true
             // Play swish sound
             // sndSwish.play()
         break
-        case !isRepeating && 190:
+        case !isRepeating && 73:
             player2Sword.x -= 70
             player2Sword.thrust = true
             // Play swish sound
             // sndSwish.play()
         break
         // causes the swords to parry when pushed.
-        case !isRepeating && 67:
+        case !isRepeating && 83:
             player1Sword.x += 80
             player1Sword.y -= 20
             player1Sword.width = 20
             player1Sword.height = 100
             player1.invul = true
         break
-        case !isRepeating && 191:
+        case !isRepeating && 75:
             player2Sword.y -= 50
             player2Sword.width = 20
             player2Sword.height = 100
@@ -162,11 +162,11 @@ const attackHandler = (e) => {
 
 const swordReturn = function (key) {
     // returns swords after attack
-    if (key.toLowerCase() == 'v') { player1Sword.x -= 70, player1Sword.thrust = false }
-    if (key.toLowerCase() == '.') { player2Sword.x += 70, player2Sword.thrust = false }
+    if (key.toLowerCase() == 'w') { player1Sword.x -= 70, player1Sword.thrust = false }
+    if (key.toLowerCase() == 'i') { player2Sword.x += 70, player2Sword.thrust = false }
     // returns swords after parry
-    if (key.toLowerCase() == 'c') { player1Sword.x -= 80, player1Sword.y += 20, player1Sword.width = 100, player1Sword.height = 20, player1.invul = false}
-    if (key.toLowerCase() == '/') { player2Sword.y += 50, player2Sword.width = 100, player2Sword.height = 20, player2.invul = false}   
+    if (key.toLowerCase() == 's') { player1Sword.x -= 80, player1Sword.y += 20, player1Sword.width = 100, player1Sword.height = 20, player1.invul = false}
+    if (key.toLowerCase() == 'k') { player2Sword.y += 50, player2Sword.width = 100, player2Sword.height = 20, player2.invul = false}   
 }
 
 
@@ -260,11 +260,9 @@ const detectHit2 = () => {
 const checkOffStage = (player) => {
     // checks if a player is offstage and deducts health
     if (player.x < 0 || player.x + player.width > game.width) {
-        console.log('Return to stage!')
+        // console.log('Return to stage!')
         player.health -= 1
     }
-    
-
 }
 
 // GAME LOOP ---------------------------------
@@ -313,14 +311,17 @@ const gameLoop = () => {
 
 }
 
+
+
 // EVENT LISTENERS --------------------------
 
 
 document.addEventListener('keydown', movementHandler)
 document.addEventListener('keydown', attackHandler)
 
+
 document.addEventListener('keyup', (e) => {
-    if (['a', 'v', 'c', '.', '/'].includes(e.key)) {
+    if (['w', 's', 'i', 'k'].includes(e.key)) {
         swordReturn(e.key)
         // clears list of pressed keys when key is released.
         pressedKeys[e.keyCode] = false;
@@ -333,10 +334,25 @@ document.addEventListener('keyup', (e) => {
 
 // INTERVAL ----------------------------------
 
-const gameInterval = setInterval(gameLoop, 60)
+const gameInterval = setInterval(gameLoop, 30)
 const stopGameLoop = () => { clearInterval(gameInterval)}
+document.getElementById('container').appendChild(reset)
+// document.addEventListener('DOMContentLoaded', function () {
+//     // game loop interval
+//     gameInterval
+// })
 
-document.addEventListener('DOMContentLoaded', function () {
-    // game loop interval
-    gameInterval
-})
+const resetGame = () => {
+    console.log('clicked reset')
+    player1.health = 100
+    player1.x = 300
+    player1Sword.x = 300
+    player2.health = 100
+    player2.x = 900
+    player2Sword.x = 880
+    pressedKeys = []
+    console.log(player1.health)
+    // gameInterval
+}
+
+reset.addEventListener('click', resetGame)
