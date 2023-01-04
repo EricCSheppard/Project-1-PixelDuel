@@ -290,9 +290,9 @@ const gameLoop = () => {
     // Update player 1 health bar
     document.getElementById('Player1Health').style.width = player1.health + '%'
 
-
+    // Update player 1 points
     document.getElementById('player1wins').innerText = 'Player 1 Points: ' + player1Wins
-
+    // Update player 2 points
     document.getElementById('player2wins').innerText = 'Player 2 Points: ' + player2Wins
 
     // Old method of displaying player health as a number
@@ -315,7 +315,9 @@ const gameLoop = () => {
         if (player2Wins == 3) {
             stopGameLoop()
             document.getElementById('msg').innerText = 'Player 2 Wins!'
-            document.getElementById('container').style.backgroundColor = player2.color
+            player1Wins = 0
+            player2Wins = 0
+            // document.getElementById('container').style.backgroundColor = player2.color
         } else {
         stopGameLoop()
         document.getElementById('msg').innerText = 'Point for Player 2!'
@@ -338,7 +340,9 @@ const gameLoop = () => {
         if (player1Wins == 3) {
             stopGameLoop()
             document.getElementById('msg').innerText = 'Player 1 Wins!'
-            document.getElementById('container').style.backgroundColor = player1.color
+            player1Wins = 0
+            player2Wins = 0
+            // document.getElementById('container').style.backgroundColor = player1.color
         } else {
         stopGameLoop()
         document.getElementById('msg').innerText = 'Point for Player 1!'
@@ -373,9 +377,7 @@ const stopGameLoop = () => { clearInterval(gameInterval)}
 const runGameLoop = () => { 
     gameInterval = setInterval(gameLoop, 25)
     reset.addEventListener('click', resetGame)
-    console.log(player2Wins)
 }
-
 
 // Game starts on button press so this is not necessary
 // document.addEventListener('DOMContentLoaded', runGameLoop)
@@ -395,5 +397,6 @@ const resetGame = () => {
     reset.removeEventListener('click', resetGame)
     runGameLoop()
 }
+
 reset.addEventListener('click', resetGame)
 
