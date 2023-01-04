@@ -324,7 +324,7 @@ const gameLoop = () => {
         setTimeout(()=> {
             resetGame()
         }
-        , 3000)
+        , 1500)
     }
     }
     if (player2.health > 0) {
@@ -349,7 +349,7 @@ const gameLoop = () => {
         setTimeout(()=> {
             resetGame()
         }
-        , 3000)
+        , 1500)
         }
     }      
 }
@@ -384,9 +384,28 @@ const runGameLoop = () => {
 
 const resetGame = () => {
     stopGameLoop()
+    countdown()
+    setTimeout(gameDelay, 3000)
+}
+
+timeLeft = 4;
+
+const countdown = () => {
+    document.getElementById('msg').innerText = timeLeft
+	timeLeft--;
+	document.getElementById('msg').innerText = timeLeft
+	if (timeLeft > 0) {
+		setTimeout(countdown, 1000);
+	} else {
+        document.getElementById('msg').innerText = 'En garde!'
+        timeLeft = 4
+    }
+}
+
+const gameDelay = () => {
     document.getElementById('container').style.backgroundColor = background
     // console.log('clicked reset')
-    document.getElementById('msg').innerText = 'En garde!'
+    // document.getElementById('msg').innerText = 'En garde!'
     player1.health = 100
     player1.x = 300
     player1Sword.x = 300
