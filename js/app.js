@@ -6,13 +6,13 @@
 
 const game = document.getElementById('canvas')
 
-const reset = document.createElement('button')
-reset.id = 'reset'
-reset.style.background = 'grey'
-reset.innerText = 'reset'
-reset.style.textAlign = 'center'
-reset.style.height = '100px'
-reset.style.width = '100px'
+// const reset = document.createElement('button')
+// reset.id = 'reset'
+// reset.style.background = 'grey'
+// reset.innerText = 'Start'
+// reset.style.textAlign = 'center'
+// reset.style.height = '50px'
+// reset.style.width = '100px'
 
 // Set context of game to 2d
 
@@ -23,7 +23,7 @@ const ctx = game.getContext('2d')
 game.setAttribute('width', getComputedStyle(game)['width'])
 game.setAttribute('height', getComputedStyle(game)['height'])
 
-game.height = 600
+game.height = 600   
 
 
 // class for fencers
@@ -211,7 +211,7 @@ const detectHit1 = () => {
             setTimeout(()=> {
                 document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)'
             }
-            , 100);
+            , 150)
         }
     // two swords connecting equals a parry
     if (player2Sword.x < player1Sword.x + player1Sword.width
@@ -230,7 +230,7 @@ const detectHit1 = () => {
             setTimeout(()=> {
                 document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)'
             }
-            , 100);
+            , 150)
         }    
     // two players colliding while not attacking or defending
     if (player1.x < player2.x + player2.width
@@ -265,11 +265,10 @@ const detectHit2 = () => {
             setTimeout(()=> {
                 document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)'
             }
-            , 100);
+            , 150)
         }
         // parry hit detection in detectHit1 works for both players
 }
-
 
 const checkOffStage = (player) => {
     // checks if a player is offstage and deducts health
@@ -305,7 +304,6 @@ const gameLoop = () => {
         stopGameLoop()
         document.getElementById('container').style.backgroundColor = player2.color
         document.getElementById('player1status').innerText = `XXXXXXXXXX`
-        document.getElementById('container').appendChild(reset)
     }
     if (player2.health > 0) {
     // render player2 and sword
@@ -319,8 +317,7 @@ const gameLoop = () => {
         document.getElementById('msg').innerText = 'Player 1 Wins!'
         stopGameLoop()
         document.getElementById('container').style.backgroundColor = player1.color
-        document.getElementById('player2status').innerText = `XXXXXXXXXX`
-        document.getElementById('container').appendChild(reset)   
+        document.getElementById('player2status').innerText = `XXXXXXXXXX`   
     }   
 }
 
@@ -358,6 +355,7 @@ document.getElementById('container').appendChild(reset)
 const resetGame = () => {
     document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)'
     // console.log('clicked reset')
+    document.getElementById('msg').innerText = 'En garde!'
     player1.health = 100
     player1.x = 300
     player1Sword.x = 300
