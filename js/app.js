@@ -200,20 +200,25 @@ const detectHit1 = () => {
         // makes sure player is attacking so there is no hit when players simply walk into each other.
         && player1Sword.thrust == true ) {
             sndHit.play()
-            console.log('Player 2 HIT!')
+            // console.log('Player 2 HIT!')
             player2.x += 100
             player2Sword.x += 100
             player2.health -= 20
             // flash screen red when there is a hit
             document.getElementById('container').style.backgroundColor = 'red'
-            console.log(`Player 2's health is now ${player2.health}`)
+            // console.log(`Player 2's health is now ${player2.health}`)
+            // resets background color after flash
+            setTimeout(()=> {
+                document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)'
+            }
+            , 100);
         }
     // two swords connecting equals a parry
     if (player2Sword.x < player1Sword.x + player1Sword.width
         && player2Sword.x + player2Sword.width > player1Sword.x
         && player2Sword.y < player1Sword.y + player1Sword.height
         && player2Sword.y + player2Sword.height > player1Sword.y) {
-            console.log('Parry!')
+            // console.log('Parry!')
             sndParry.play()
             player1.x -= 70
             player1Sword.x -= 70
@@ -221,7 +226,11 @@ const detectHit1 = () => {
             player2Sword.x += 70
             // Flashes background grey for a parry.
             document.getElementById('container').style.backgroundColor = 'grey'
-            // document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)';
+            // resets background color after flash
+            setTimeout(()=> {
+                document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)'
+            }
+            , 100);
         }    
     // two players colliding while not attacking or defending
     if (player1.x < player2.x + player2.width
@@ -245,13 +254,18 @@ const detectHit2 = () => {
         && player1.invul == false
         && player2Sword.thrust == true ) {
             sndHit.play()
-            console.log('Player 1 HIT!')
+            // console.log('Player 1 HIT!')
             player1.x -= 100
             player1Sword.x -= 100
             player1.health -= 20
             // flash screen red when there is a hit
             document.getElementById('container').style.backgroundColor = 'red'
-            console.log (`Player 1's health is now ${player1.health}`)
+            // console.log (`Player 1's health is now ${player1.health}`)
+            // resets background color after flash
+            setTimeout(()=> {
+                document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)'
+            }
+            , 100);
         }
         // parry hit detection in detectHit1 works for both players
 }
@@ -310,26 +324,19 @@ const gameLoop = () => {
     }   
 }
 
-
-
 // EVENT LISTENERS --------------------------
-
 
 document.addEventListener('keydown', movementHandler)
 document.addEventListener('keydown', attackHandler)
-
 
 document.addEventListener('keyup', (e) => {
     if (['w', 's', 'i', 'k'].includes(e.key)) {
         swordReturn(e.key)
         // clears list of pressed keys when key is released.
         pressedKeys[e.keyCode] = false;
-        // resets background color after flash
-        document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)'
+        
     }
 })
-
-
 
 // INTERVAL ----------------------------------
 
