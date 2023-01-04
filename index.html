@@ -10,15 +10,16 @@
 </head>
 <body>
     <div id="container">
-        <aside id="top-left"><h2 id="player1status">Player 1</h2></aside>
-        <aside id="top-right"><h2 id="player2status">Player 2</h2></aside>
+        <div id="top-left"><h2 id="player1status">Player 1</h2></div>
+        <div id="top-center"><h1 id="msg">Press start to play!</h2></div>
+        <div id="top-right"><h2 id="player2status">Player 2</h2></div>
         <main>
-            <canvas id="canvas"><!-- play it, a game --></canvas>
+            <canvas id="canvas"></canvas>
         </main>
-        <aside id="center"><h2 id="msg">Press start to play!</h2></aside>
-        <button id="reset">Start</button>
+        <div id="bottom-left"><h2 id="player1wins">Player 1 Wins</h2></div>
+        <div id="bottom-center"><button id="reset">Start</button></div> 
+        <div id="bottom-right"><h2 id="player2wins">Player 2 Wins</h2></div>
     </div>
-    
     <script src="js/app.js"></script>
 </body>
 </html>

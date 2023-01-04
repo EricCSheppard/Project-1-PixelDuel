@@ -27,46 +27,65 @@ canvas {
     grid-gap: 1em;
     grid-template-rows: .25fr .5fr .25fr;
     grid-template-columns: .4fr .4fr .4fr;
-    grid-template-areas: "top-left center top-right"
+    grid-template-areas: "top-left top-center top-right"
     "game game game"
-    "buttons buttons buttons";
+    "bottom-left bottom-center bottom-right";
     text-align: center;
     }
 
-#top-left, #top-right {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #222;
-}
-
 #top-left {
     grid-area: top-left;
+}
+
+#top-center {
+    grid-area: top-center;
 }
 
 #top-right {
     grid-area: top-right;
 }
 
-#bottom {
-    grid-area: buttons
+#top-left, #top-center, #top-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #222;
+}
+
+#bottom-left {
+    grid-area: bottom-left;
+    background-color: #222;
+}
+
+#bottom-center {
+    grid-area: bottom-center;
+}
+
+#bottom-right {
+    grid-area: bottom-right;
+    background-color: #222;
+}
+
+#bottom-left, #bottom-center, #bottom-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 main {
     grid-area: game;
 }
 
-#center {
+/* #top-center {
     grid-area: center;
     background-color: #222;
-}
+} */
 
 #reset {
-    
     background-color: grey;
     text-align: center;
     height: 50px;
     width: 100px;
-
 }
+
 

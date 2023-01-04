@@ -62,6 +62,7 @@ class Sword {
         }
     }
 }
+
 // SOUNDS ----------------------------------------------------  
 
 function sound(src) {
@@ -347,9 +348,7 @@ const runGameLoop = () => {
 }
 
 
-// remove this if you want the reset to appear after a player wins
-document.getElementById('container').appendChild(reset)
-
+// Game starts on button press so this is not necessary
 // document.addEventListener('DOMContentLoaded', runGameLoop)
 
 const resetGame = () => {
