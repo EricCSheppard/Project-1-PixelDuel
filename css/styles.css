@@ -42,7 +42,7 @@ canvas {
 
 #Player1Health {
     background-color: yellow;
-    height: 30px;
+    height: 100%;
     position: absolute;
     top: 0;
     right: 0;
@@ -70,7 +70,7 @@ canvas {
 
 #Player2Health {
     background-color: yellow;
-    height: 30px;
+    height: 100%;
     position: absolute;
     top: 0;
     right: 0;
@@ -80,7 +80,7 @@ canvas {
 
 #PlayerHealthBG {
     background-color: red;
-    height: 30px;
+    height: 100%;
     width: 100%;
 }
 

@@ -175,21 +175,18 @@ const swordReturn = function (key) {
 // Universal hit detection for swords on bodies (probably won't work due to having to move the players in different directions.)
 
 // const detectHit = (attackerSword, defender) => {
-
 //     if (attackerSword.x < defender.x + defender.width
 //         && attackerSword.x + attackerSword.width > defender.x
 //         && attackerSword.y < defender.y + defender.height
 //         && attackerSword.y + attackerSword.height > defender.y
 //         && defender.invul == false ) {
-//         console.log('HIT!')
-//         defender 
+//         console.log('HIT!') 
 //         }
 // }
 
 // Individual hit detection for either player
 
 const detectHit1 = () => {
-
     // player 1 hits player 2
     if (player1Sword.x < player2.x + player2.width
         && player1Sword.x + player1Sword.width > player2.x
@@ -268,6 +265,7 @@ const detectHit2 = () => {
             , 150)
         }
         // parry hit detection in detectHit1 works for both players
+        // body collision hit detection in detectHit1 works for both players
 }
 
 const checkOffStage = (player) => {
@@ -384,18 +382,17 @@ const runGameLoop = () => {
 
 const resetGame = () => {
     stopGameLoop()
-    countdown()
+    countDown()
     setTimeout(gameDelay, 3000)
 }
 
 timeLeft = 4;
 
-const countdown = () => {
-    document.getElementById('msg').innerText = timeLeft
+const countDown = () => {
 	timeLeft--;
 	document.getElementById('msg').innerText = timeLeft
 	if (timeLeft > 0) {
-		setTimeout(countdown, 1000);
+		setTimeout(countDown, 1000);
 	} else {
         document.getElementById('msg').innerText = 'En garde!'
         timeLeft = 4
@@ -418,4 +415,3 @@ const gameDelay = () => {
 }
 
 reset.addEventListener('click', resetGame)
-
