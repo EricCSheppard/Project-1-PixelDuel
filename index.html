@@ -7,12 +7,23 @@
     <title>Pixel Duel</title>
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 <body>
     <div id="container">
-        <div id="top-left"><h2 id="player1status">Player 1</h2></div>
+        <div id="top-left">
+            <div id="Player1Health"></div>
+            <div id="PlayerHealthBG"></div>
+        </div>
         <div id="top-center"><h1 id="msg">Press start to play!</h2></div>
-        <div id="top-right"><h2 id="player2status">Player 2</h2></div>
+        <div id="top-right">
+            <div id="Player2Health"></div>
+            <div id="PlayerHealthBG"></div>
+        </div>
         <main>
             <canvas id="canvas"></canvas>
         </main>

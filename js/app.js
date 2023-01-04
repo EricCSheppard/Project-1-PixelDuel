@@ -205,6 +205,8 @@ const detectHit1 = () => {
             player2.x += 100
             player2Sword.x += 100
             player2.health -= 20
+            // reduces the health bar of player 2
+            // document.getElementById('Player2Health').style.width = player2.health + '%'
             // flash screen red when there is a hit
             document.getElementById('container').style.backgroundColor = 'red'
             // console.log(`Player 2's health is now ${player2.health}`)
@@ -259,6 +261,8 @@ const detectHit2 = () => {
             player1.x -= 100
             player1Sword.x -= 100
             player1.health -= 20
+            // reduces the health bar of player 1
+            // document.getElementById('Player1Health').style.width = player1.health + '%'
             // flash screen red when there is a hit
             document.getElementById('container').style.backgroundColor = 'red'
             // console.log (`Player 1's health is now ${player1.health}`)
@@ -286,11 +290,13 @@ const gameLoop = () => {
     // clear the screen
     ctx.clearRect(0,0, game.width, game.height)
 
-    document.getElementById('player1status').innerText = `* Player 1 - ${player1.health} *`
-    document.getElementById('player1status').style.color = player1.color
+
+    // Old method of displaying player health as a number
+    // document.getElementById('player1status').innerText = `* Player 1 - ${player1.health} *`
+    // document.getElementById('player1status').style.color = player1.color
     
-    document.getElementById('player2status').innerText = `* Player 2 - ${player2.health} *`
-    document.getElementById('player2status').style.color = player2.color
+    // document.getElementById('player2status').innerText = `* Player 2 - ${player2.health} *`
+    // document.getElementById('player2status').style.color = player2.color
 
     if (player1.health > 0) {
     // render player1 and sword
@@ -298,13 +304,15 @@ const gameLoop = () => {
     player1Sword.render()
     detectHit1()
     checkOffStage(player1)
+    // Update player 1 health bar
+    document.getElementById('Player1Health').style.width = player1.health + '%'
     } 
     // code to end the game with a player win.
     else {
         document.getElementById('msg').innerText = 'Player 2 Wins!'
         stopGameLoop()
         document.getElementById('container').style.backgroundColor = player2.color
-        document.getElementById('player1status').innerText = `XXXXXXXXXX`
+        // document.getElementById('player1status').innerText = `XXXXXXXXXX`
     }
     if (player2.health > 0) {
     // render player2 and sword
@@ -312,13 +320,15 @@ const gameLoop = () => {
     player2Sword.render()
     detectHit2()
     checkOffStage(player2)
+    // Update player 2 health bar
+    document.getElementById('Player2Health').style.width = player2.health + '%'
     } 
     // code to end the game with a player win.
     else {
         document.getElementById('msg').innerText = 'Player 1 Wins!'
         stopGameLoop()
         document.getElementById('container').style.backgroundColor = player1.color
-        document.getElementById('player2status').innerText = `XXXXXXXXXX`   
+        // document.getElementById('player2status').innerText = `XXXXXXXXXX`   
     }   
 }
 
@@ -362,6 +372,8 @@ const resetGame = () => {
     player2.x = 900
     player2Sword.x = 880
     pressedKeys = []
+    document.getElementById('Player2Health').style.width = '100%'
+    document.getElementById('Player1Health').style.width = '100%'
     // console.log(player1.health)
     reset.removeEventListener('click', resetGame)
     runGameLoop()

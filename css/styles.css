@@ -33,23 +33,61 @@ canvas {
     text-align: center;
     }
 
-#top-left {
+#top-left, #top-right {
     grid-area: top-left;
+    border:#222 2px solid;
+    width: 100%;
+    position:relative;
 }
+
+#Player1Health {
+    background-color: yellow;
+    height: 30px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    right: 0;
+}
+
+/* #Player1HealthBG {
+    background-color: yellow;
+    height: 30px;
+    width: 100%;
+} */
 
 #top-center {
     grid-area: top-center;
+    background-color: #222;
 }
 
 #top-right {
     grid-area: top-right;
+    border:#222 2px solid;
+    width: 100%;
+    position:relative;
+}
+
+#Player2Health {
+    background-color: yellow;
+    height: 30px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    right: 0;
+}
+
+#PlayerHealthBG {
+    background-color: red;
+    height: 30px;
+    width: 100%;
 }
 
 #top-left, #top-center, #top-right {
-    display: flex;
+    /* display: flex; */
     justify-content: center;
     align-items: center;
-    background-color: #222;
 }
 
 #bottom-left {
