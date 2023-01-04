@@ -5,14 +5,7 @@
 // Grabs the canvas.
 
 const game = document.getElementById('canvas')
-
-// const reset = document.createElement('button')
-// reset.id = 'reset'
-// reset.style.background = 'grey'
-// reset.innerText = 'Start'
-// reset.style.textAlign = 'center'
-// reset.style.height = '50px'
-// reset.style.width = '100px'
+const background = document.getElementById('container').style.backgroundColor
 
 // Set context of game to 2d
 
@@ -205,14 +198,12 @@ const detectHit1 = () => {
             player2.x += 100
             player2Sword.x += 100
             player2.health -= 20
-            // reduces the health bar of player 2
-            // document.getElementById('Player2Health').style.width = player2.health + '%'
             // flash screen red when there is a hit
             document.getElementById('container').style.backgroundColor = 'red'
             // console.log(`Player 2's health is now ${player2.health}`)
             // resets background color after flash
             setTimeout(()=> {
-                document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)'
+                document.getElementById('container').style.backgroundColor = background
             }
             , 150)
         }
@@ -231,11 +222,11 @@ const detectHit1 = () => {
             document.getElementById('container').style.backgroundColor = 'grey'
             // resets background color after flash
             setTimeout(()=> {
-                document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)'
+                document.getElementById('container').style.backgroundColor = background
             }
             , 150)
         }    
-    // two players colliding while not attacking or defending
+    // two players colliding while not attacking or defending to stop them from crossing
     if (player1.x < player2.x + player2.width
         && player1.x + player1.width > player2.x
         && player1.y < player2.y + player2.height
@@ -261,14 +252,12 @@ const detectHit2 = () => {
             player1.x -= 100
             player1Sword.x -= 100
             player1.health -= 20
-            // reduces the health bar of player 1
-            // document.getElementById('Player1Health').style.width = player1.health + '%'
             // flash screen red when there is a hit
             document.getElementById('container').style.backgroundColor = 'red'
             // console.log (`Player 1's health is now ${player1.health}`)
             // resets background color after flash
             setTimeout(()=> {
-                document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)'
+                document.getElementById('container').style.backgroundColor = background
             }
             , 150)
         }
@@ -362,7 +351,7 @@ const runGameLoop = () => {
 // document.addEventListener('DOMContentLoaded', runGameLoop)
 
 const resetGame = () => {
-    document.getElementById('container').style.backgroundColor = 'rgb(248, 211, 219)'
+    document.getElementById('container').style.backgroundColor = background
     // console.log('clicked reset')
     document.getElementById('msg').innerText = 'En garde!'
     player1.health = 100
