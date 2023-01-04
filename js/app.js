@@ -5,7 +5,13 @@
 // Grabs the canvas.
 
 const game = document.getElementById('canvas')
+
+//grabs the background color
 const background = document.getElementById('container').style.backgroundColor
+
+// set player wins to 0
+let player1Wins = 0
+let player2Wins = 0
 
 // Set context of game to 2d
 
@@ -268,7 +274,7 @@ const checkOffStage = (player) => {
     // checks if a player is offstage and deducts health
     if (player.x < 0 || player.x + player.width > game.width) {
         // console.log('Return to stage!')
-        player.health -= 1
+        player.health -= .5
     }
 }
 
@@ -279,6 +285,15 @@ const gameLoop = () => {
     // clear the screen
     ctx.clearRect(0,0, game.width, game.height)
 
+    // Update player 2 health bar
+    document.getElementById('Player2Health').style.width = player2.health + '%'
+    // Update player 1 health bar
+    document.getElementById('Player1Health').style.width = player1.health + '%'
+
+
+    document.getElementById('player1wins').innerText = 'Player 1 Points: ' + player1Wins
+
+    document.getElementById('player2wins').innerText = 'Player 2 Points: ' + player2Wins
 
     // Old method of displaying player health as a number
     // document.getElementById('player1status').innerText = `* Player 1 - ${player1.health} *`
@@ -293,15 +308,22 @@ const gameLoop = () => {
     player1Sword.render()
     detectHit1()
     checkOffStage(player1)
-    // Update player 1 health bar
-    document.getElementById('Player1Health').style.width = player1.health + '%'
     } 
-    // code to end the game with a player win.
+    // code to tally player wins
     else {
-        document.getElementById('msg').innerText = 'Player 2 Wins!'
+        player2Wins += 1
+        if (player2Wins == 3) {
+            stopGameLoop()
+            document.getElementById('msg').innerText = 'Player 2 Wins!'
+            document.getElementById('container').style.backgroundColor = player2.color
+        } else {
         stopGameLoop()
-        document.getElementById('container').style.backgroundColor = player2.color
-        // document.getElementById('player1status').innerText = `XXXXXXXXXX`
+        document.getElementById('msg').innerText = 'Point for Player 2!'
+        setTimeout(()=> {
+            resetGame()
+        }
+        , 3000)
+    }
     }
     if (player2.health > 0) {
     // render player2 and sword
@@ -309,16 +331,23 @@ const gameLoop = () => {
     player2Sword.render()
     detectHit2()
     checkOffStage(player2)
-    // Update player 2 health bar
-    document.getElementById('Player2Health').style.width = player2.health + '%'
     } 
-    // code to end the game with a player win.
+    // code to tally player wins
     else {
-        document.getElementById('msg').innerText = 'Player 1 Wins!'
+        player1Wins += 1
+        if (player1Wins == 3) {
+            stopGameLoop()
+            document.getElementById('msg').innerText = 'Player 1 Wins!'
+            document.getElementById('container').style.backgroundColor = player1.color
+        } else {
         stopGameLoop()
-        document.getElementById('container').style.backgroundColor = player1.color
-        // document.getElementById('player2status').innerText = `XXXXXXXXXX`   
-    }   
+        document.getElementById('msg').innerText = 'Point for Player 1!'
+        setTimeout(()=> {
+            resetGame()
+        }
+        , 3000)
+        }
+    }      
 }
 
 // EVENT LISTENERS --------------------------
@@ -342,8 +371,9 @@ let gameInterval
 const stopGameLoop = () => { clearInterval(gameInterval)}
 
 const runGameLoop = () => { 
-    gameInterval = setInterval(gameLoop, 30)
+    gameInterval = setInterval(gameLoop, 25)
     reset.addEventListener('click', resetGame)
+    console.log(player2Wins)
 }
 
 
@@ -351,6 +381,7 @@ const runGameLoop = () => {
 // document.addEventListener('DOMContentLoaded', runGameLoop)
 
 const resetGame = () => {
+    stopGameLoop()
     document.getElementById('container').style.backgroundColor = background
     // console.log('clicked reset')
     document.getElementById('msg').innerText = 'En garde!'
@@ -361,9 +392,6 @@ const resetGame = () => {
     player2.x = 900
     player2Sword.x = 880
     pressedKeys = []
-    document.getElementById('Player2Health').style.width = '100%'
-    document.getElementById('Player1Health').style.width = '100%'
-    // console.log(player1.health)
     reset.removeEventListener('click', resetGame)
     runGameLoop()
 }

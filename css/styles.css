@@ -114,12 +114,8 @@ main {
     grid-area: game;
 }
 
-/* #top-center {
-    grid-area: center;
-    background-color: #222;
-} */
-
 #reset {
+    font-family: 'Press Start 2P', monospace;
     background-color: grey;
     text-align: center;
     height: 50px;
