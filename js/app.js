@@ -86,11 +86,11 @@ const sndHit = new sound('sounds/Hit.wav')
 
 // creates the players and the swords
 
-const player1 = new Fencer(300, 450, 80, 120, 'green')
-const player1Sword = new Sword(300, 490, 100, 20, 'green')
+const player1 = new Fencer(300, 450, 80, 120, 'black')
+const player1Sword = new Sword(300, 490, 100, 20, 'black')
 
-const player2 = new Fencer(900, 450, 80, 120, 'lightblue')
-const player2Sword = new Sword(880, 511, 100, 20, 'lightblue')
+const player2 = new Fencer(900, 450, 80, 120, 'brown')
+const player2Sword = new Sword(880, 511, 100, 20, 'brown')
 
 
 
