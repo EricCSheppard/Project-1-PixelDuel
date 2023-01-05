@@ -28,7 +28,6 @@ game.height = 600
 // class for fencers
 
 class Fencer {
-    
     constructor(x, y, width, height, color) {
         this.x = x
         this.y = y
@@ -47,7 +46,6 @@ class Fencer {
 // class for sword
 
 class Sword {
-
     constructor (x, y, width, height, color) {
         this.x = x
         this.y = y
@@ -196,7 +194,7 @@ const detectHit1 = () => {
         && player2.invul == false
         // makes sure player is attacking so there is no hit when players simply walk into each other.
         && player1Sword.thrust == true ) {
-            sndHit.play()
+            // sndHit.play()
             // console.log('Player 2 HIT!')
             player2.x += 100
             player2Sword.x += 100
@@ -245,27 +243,27 @@ const detectHit2 = () => {
 
     // player 2 hits player 1
     if (player2Sword.x < player1.x + player1.width
-        && player2Sword.x + player2Sword.width > player1.x
-        && player2Sword.y < player1.y + player1.height
-        && player2Sword.y + player2Sword.height > player1.y
-        && player1.invul == false
-        && player2Sword.thrust == true ) {
-            sndHit.play()
-            // console.log('Player 1 HIT!')
-            player1.x -= 100
-            player1Sword.x -= 100
-            player1.health -= 20
-            // flash screen red when there is a hit
-            document.getElementById('container').style.backgroundColor = 'red'
-            // console.log (`Player 1's health is now ${player1.health}`)
-            // resets background color after flash
-            setTimeout(()=> {
-                document.getElementById('container').style.backgroundColor = background
+    && player2Sword.x + player2Sword.width > player1.x
+    && player2Sword.y < player1.y + player1.height
+    && player2Sword.y + player2Sword.height > player1.y
+    && player1.invul == false
+    && player2Sword.thrust == true ) {
+        // sndHit.play()
+        // console.log('Player 1 HIT!')
+        player1.x -= 100
+        player1Sword.x -= 100
+        player1.health -= 20
+        // flash screen red when there is a hit
+        document.getElementById('container').style.backgroundColor = 'red'
+        // console.log (`Player 1's health is now ${player1.health}`)
+        // resets background color after flash
+        setTimeout(()=> {
+            document.getElementById('container').style.backgroundColor = background
             }
             , 150)
         }
-        // parry hit detection in detectHit1 works for both players
-        // body collision hit detection in detectHit1 works for both players
+    // parry hit detection in detectHit1 works for both players
+    // body collision hit detection in detectHit1 works for both players
 }
 
 const checkOffStage = (player) => {
@@ -321,9 +319,9 @@ const gameLoop = () => {
         document.getElementById('msg').innerText = 'Point for Player 2!'
         setTimeout(()=> {
             resetGame()
+            }
+            , 1500)
         }
-        , 1500)
-    }
     }
     if (player2.health > 0) {
     // render player2 and sword
@@ -346,8 +344,8 @@ const gameLoop = () => {
         document.getElementById('msg').innerText = 'Point for Player 1!'
         setTimeout(()=> {
             resetGame()
-        }
-        , 1500)
+            }
+            , 1500)
         }
     }      
 }
@@ -380,14 +378,15 @@ const runGameLoop = () => {
 // Game starts on button press so this is not necessary
 // document.addEventListener('DOMContentLoaded', runGameLoop)
 
+// Stops current loop, counts down, and then starts a new round
 const resetGame = () => {
     stopGameLoop()
     countDown()
-    setTimeout(gameDelay, 3000)
+    // setTimeout(gameDelay, 3000)
 }
 
+// Countdown timer to starting a new game
 timeLeft = 4;
-
 const countDown = () => {
 	timeLeft--;
 	document.getElementById('msg').innerText = timeLeft
@@ -396,9 +395,11 @@ const countDown = () => {
 	} else {
         document.getElementById('msg').innerText = 'En garde!'
         timeLeft = 4
+        gameDelay()
     }
 }
 
+// The rest of the new round actions after the delay
 const gameDelay = () => {
     document.getElementById('container').style.backgroundColor = background
     // console.log('clicked reset')
