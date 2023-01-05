@@ -46,26 +46,35 @@ class Sprite {
 // class for fencers
 
 class Fencer {
-    constructor(x, y, imageSrc, scale) {
+    constructor(x, y, width, height, imageSrc, scale, offset = {x: 0, y:0}) {
         this.x = x
         this.y = y
+        this.width = width
+        this.height = height
         this.health = 100
         this.invul = false
         this.image = new Image()
         this.image.src = imageSrc
         this.scale = scale
+        this.offset = offset
+        this.render = function () {
+            ctx.fillStyle = this.color
+            ctx.fillRect(this.x, this.y, this.width, this.height)
+        }
     }
         draw() {
-            ctx.drawImage(this.image, this.x, this.y)
+            ctx.drawImage(
+                this.image, 
+                this.x - this.offset.x, 
+                this.y - this.offset.y, 
+                this.image.width * this.scale, 
+                this.image.height * this.scale)
             }
         
         update() {
             this.draw()
             }
-        // this.render = function () {
-        //     ctx.fillStyle = this.color
-        //     ctx.fillRect(this.x, this.y, this.width, this.height)
-        // }
+        
 }
 
 // class for sword
@@ -110,12 +119,26 @@ const sndHit = new sound('sounds/Hit.wav')
 
 // creates the players and the swords
 
-const player1 = new Fencer(300, 450, './img/Fencer.png', 2)
-const player1Sword = new Sword(300, 490, 100, 20, 'black')
+const player1 = new Fencer(
+    300, 
+    450, 
+    80, 
+    120, 
+    './img/Fencer.png', 
+    2, 
+    offset = {x: 12, y: 65})
 
-const player2 = new Fencer(900, 450, './img/Fencer.png', 2)
+const player2 = new Fencer(
+    900, 
+    450, 
+    80, 
+    120, 
+    './img/Fencer2.png', 
+    2, 
+    offset = {x: 210, y: 65})
+
 const player2Sword = new Sword(880, 511, 100, 20, 'brown')
-
+const player1Sword = new Sword(300, 490, 100, 20, 'green')
 
 
 // MOVEMENT HANDLER -------------------------------
@@ -326,6 +349,7 @@ const gameLoop = () => {
 
     if (player1.health > 0) {
     // render player1 and sword
+    player1.render()
     player1.update()
     player1Sword.render()
     detectHit1()
@@ -351,6 +375,7 @@ const gameLoop = () => {
     }
     if (player2.health > 0) {
     // render player2 and sword
+    player2.render()
     player2.update()
     player2Sword.render()
     detectHit2()
