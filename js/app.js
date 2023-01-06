@@ -118,9 +118,14 @@ function sound(src) {
 }
 
 // Define the sounds used in the game
-const sndParry = new sound('sounds/parry.wav')
+const sndParry = new sound('sounds/parry1.wav')
 // const sndSwish = new sound('sounds/Swish2.wav')
-const sndHit = new sound('sounds/Hit.wav')
+const sndHit = new sound('sounds/Hit1.wav')
+const sndFlourish1 = new sound('sounds/Flourish1.wav')
+const sndFlourish2 = new sound('sounds/Flourish2.wav')
+const sndTheme = new sound('sounds/Theme.mp3')
+const sndTimer1 = new sound('sounds/Timer1.wav')
+const sndTimer2 = new sound('sounds/Timer2.wav')
 
 // creates the players and the swords
 
@@ -412,14 +417,16 @@ const gameLoop = () => {
     else {
         player2Wins += 1
         if (player2Wins == 3) {
+            sndFlourish2.play()
             stopGameLoop()
             document.getElementById('msg').innerText = 'Player 2 Wins!'
             player1Wins = 0
             player2Wins = 0
         } else {
-        stopGameLoop()
-        document.getElementById('msg').innerText = 'Point for Player 2!'
-        setTimeout(()=> {
+            sndFlourish1.play()
+            stopGameLoop()
+            document.getElementById('msg').innerText = 'Point for Player 2!'
+            setTimeout(()=> {
             resetGame()
             }
             , 1500)
@@ -435,14 +442,16 @@ const gameLoop = () => {
     else {
         player1Wins += 1
         if (player1Wins == 3) {
+            sndFlourish2.play()
             stopGameLoop()
             document.getElementById('msg').innerText = 'Player 1 Wins!'
             player1Wins = 0
             player2Wins = 0
         } else {
-        stopGameLoop()
-        document.getElementById('msg').innerText = 'Point for Player 1!'
-        setTimeout(()=> {
+            sndFlourish1.play()
+            stopGameLoop()
+            document.getElementById('msg').innerText = 'Point for Player 1!'
+            setTimeout(()=> {
             resetGame()
             }
             , 1500)
@@ -492,9 +501,11 @@ timeLeft = 4;
 const countDown = () => {
 	timeLeft--
 	document.getElementById('msg').innerText = timeLeft
+    sndTimer1.play()
 	if (timeLeft > 0) {
 		setTimeout(countDown, 1000)
 	} else {
+        sndTimer2.play()
         document.getElementById('msg').innerText = 'En garde!'
         timeLeft = 4
         gameDelay()
