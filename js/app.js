@@ -6,7 +6,7 @@
 
 const game = document.getElementById('canvas')
 
-//grabs the background color
+//grabs the container background color
 const background = document.getElementById('container').style.backgroundColor
 
 // set player wins to 0
@@ -22,27 +22,7 @@ const ctx = game.getContext('2d')
 game.setAttribute('width', getComputedStyle(game)['width'])
 game.setAttribute('height', getComputedStyle(game)['height'])
 
-game.height = 600   
-
-// class for sprites
-
-// class Sprite {
-//     constructor({position, imageSrc, scale = 1 }) {
-//         this.position = position
-//         this.image = new Image()
-//         this.image.src = imageSrc
-//         this.scale = scale
-//     }
-
-//     draw() {
-//     ctx.drawImage(this.image, this.x, this.y)
-//     }
-
-//     update() {
-//     this.draw()
-//     }
-// }
-
+game.height = 600
 // class for fencers
 
 class Fencer {
@@ -76,14 +56,13 @@ class Fencer {
                 this.image.width * this.scale, 
                 this.image.height * this.scale)
             }
-        
         update() {
             this.draw()
             }
 }
 
 
-// class for sword
+// class for swords
 
 class Sword {
     constructor (x, y, width, height) {
@@ -116,9 +95,8 @@ function sound(src) {
         this.sound.pause()
     }
 }
-
 // Define the sounds used in the game
-const sndParry = new sound('sounds/parry1.wav')
+const sndParry = new sound('sounds/Parry1.wav')
 // const sndSwish = new sound('sounds/Swish2.wav')
 const sndHit = new sound('sounds/Hit1.wav')
 const sndFlourish1 = new sound('sounds/Flourish1.wav')
@@ -127,8 +105,9 @@ const sndTheme = new sound('sounds/Theme.mp3')
 const sndTimer1 = new sound('sounds/Timer1.wav')
 const sndTimer2 = new sound('sounds/Timer2.wav')
 
-// creates the players and the swords
+// PLAYERS -----------------------------------------
 
+// creates the players and the swords
 const player1 = new Fencer(
     300, 
     450, 
@@ -380,6 +359,7 @@ const checkOffStage = (player) => {
 
 // GAME LOOP ---------------------------------------
 
+
 const gameLoop = () => {
     
     // clear the screen
@@ -399,13 +379,6 @@ const gameLoop = () => {
     document.getElementById('player1wins').innerText = 'Player 1 Points: ' + player1Wins
     // Update player 2 points
     document.getElementById('player2wins').innerText = 'Player 2 Points: ' + player2Wins
-
-    // Old method of displaying player health as a number
-    // document.getElementById('player1status').innerText = `* Player 1 - ${player1.health} *`
-    // document.getElementById('player1status').style.color = player1.color
-    
-    // document.getElementById('player2status').innerText = `* Player 2 - ${player2.health} *`
-    // document.getElementById('player2status').style.color = player2.color
 
     if (player1.health > 0) {
     // player1.render()
@@ -459,9 +432,18 @@ const gameLoop = () => {
     }      
 }
 
+const music = (e) => {
+    switch (e.keyCode) {
+        case 77:
+            sndTheme.play()
+            break
+    }
+}
+
 // EVENT LISTENERS --------------------------
 
 document.addEventListener('keydown', movementHandler)
+document.addEventListener('keydown', music)
 document.addEventListener('keydown', attackHandler)
 
 document.addEventListener('keyup', (e) => {
@@ -473,6 +455,8 @@ document.addEventListener('keyup', (e) => {
     }
 })
 
+
+
 // INTERVAL ----------------------------------
 
 let gameInterval
@@ -482,18 +466,15 @@ const stopGameLoop = () => {
 }
 
 const runGameLoop = () => { 
-    gameInterval = setInterval(gameLoop, 25)
+    gameInterval = setInterval(gameLoop, 20)
     reset.addEventListener('click', resetGame)
 }
 
-// Game starts on button press so this is not necessary
-// document.addEventListener('DOMContentLoaded', runGameLoop)
-
 // Stops current loop, counts down, and then starts a new round
 const resetGame = () => {
+    sndTheme.stop()
     stopGameLoop()
     countDown()
-    // setTimeout(gameDelay, 3000)
 }
 
 // Countdown timer to starting a new game
@@ -501,19 +482,20 @@ timeLeft = 4;
 const countDown = () => {
 	timeLeft--
 	document.getElementById('msg').innerText = timeLeft
-    sndTimer1.play()
 	if (timeLeft > 0) {
+        sndTimer1.play()
 		setTimeout(countDown, 1000)
 	} else {
         sndTimer2.play()
         document.getElementById('msg').innerText = 'En garde!'
         timeLeft = 4
-        gameDelay()
+        newRound()
     }
 }
 
 // The rest of the new round actions after the delay
-const gameDelay = () => {
+const newRound = () => {
+    document.getElementById('canvas').style.backgroundImage = 'url("../img/StadiumBG.png")'
     document.getElementById('container').style.backgroundColor = background
     // console.log('clicked reset')
     // document.getElementById('msg').innerText = 'En garde!'
@@ -527,5 +509,8 @@ const gameDelay = () => {
     reset.removeEventListener('click', resetGame)
     runGameLoop()
 }
+
+addEventListener('DOMContentLoaded', () => {
+});
 
 reset.addEventListener('click', resetGame)
