@@ -26,22 +26,22 @@ game.height = 600
 
 // class for sprites
 
-class Sprite {
-    constructor({position, imageSrc, scale = 1 }) {
-        this.position = position
-        this.image = new Image()
-        this.image.src = imageSrc
-        this.scale = scale
-    }
+// class Sprite {
+//     constructor({position, imageSrc, scale = 1 }) {
+//         this.position = position
+//         this.image = new Image()
+//         this.image.src = imageSrc
+//         this.scale = scale
+//     }
 
-    draw() {
-    ctx.drawImage(this.image, this.x, this.y)
-    }
+//     draw() {
+//     ctx.drawImage(this.image, this.x, this.y)
+//     }
 
-    update() {
-    this.draw()
-    }
-}
+//     update() {
+//     this.draw()
+//     }
+// }
 
 // class for fencers
 
@@ -103,17 +103,17 @@ class Sword {
 // SOUNDS ----------------------------------------------------  
 
 function sound(src) {
-    this.sound = document.createElement("audio");
-    this.sound.src = src;
-    this.sound.setAttribute("preload", "auto");
-    this.sound.setAttribute("controls", "none");
-    this.sound.style.display = "none";
-    document.body.appendChild(this.sound);
+    this.sound = document.createElement('audio')
+    this.sound.src = src
+    this.sound.setAttribute('preload', 'auto')
+    this.sound.setAttribute('controls', 'none')
+    this.sound.style.display = 'none'
+    document.body.appendChild(this.sound)
     this.play = function(){
-        this.sound.play();
+        this.sound.play()
     }
     this.stop = function(){
-        this.sound.pause();
+        this.sound.pause()
     }
 }
 
@@ -162,8 +162,8 @@ const player2 = new Fencer(
             imageSrc: './img/FencerDefend2.png'
         }})
 
-const player2Sword = new Sword(880, 511, 100, 20, 'brown')
-const player1Sword = new Sword(300, 490, 100, 20, 'green')
+const player2Sword = new Sword(880, 511, 100, 20)
+const player1Sword = new Sword(300, 490, 100, 20)
 
 
 // MOVEMENT HANDLER -------------------------------
@@ -459,7 +459,7 @@ document.addEventListener('keyup', (e) => {
     if (['w', 's', 'i', 'k'].includes(e.key)) {
         swordReturn(e.key)
         // clears list of pressed keys when key is released.
-        pressedKeys[e.keyCode] = false;
+        pressedKeys[e.keyCode] = false
         
     }
 })
@@ -468,7 +468,9 @@ document.addEventListener('keyup', (e) => {
 
 let gameInterval
 
-const stopGameLoop = () => { clearInterval(gameInterval)}
+const stopGameLoop = () => { 
+    clearInterval(gameInterval)
+}
 
 const runGameLoop = () => { 
     gameInterval = setInterval(gameLoop, 25)
@@ -488,10 +490,10 @@ const resetGame = () => {
 // Countdown timer to starting a new game
 timeLeft = 4;
 const countDown = () => {
-	timeLeft--;
+	timeLeft--
 	document.getElementById('msg').innerText = timeLeft
 	if (timeLeft > 0) {
-		setTimeout(countDown, 1000);
+		setTimeout(countDown, 1000)
 	} else {
         document.getElementById('msg').innerText = 'En garde!'
         timeLeft = 4
