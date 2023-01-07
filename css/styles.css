@@ -13,7 +13,7 @@ h2 {
     font-family: 'Press Start 2P', monospace;
     /* font-family: monospace; */
     color: white;
-    font-size: 1.5vw;
+    font-size: 1.25vw;
 }
 
 #canvas {
@@ -45,7 +45,7 @@ h2 {
     display: flexbox;
     align-items: center;
     justify-content: center;
-    top: 15%;
+    top: 10%;
     right: 20%;
     left: 20%;
     bottom: 30%;
@@ -55,15 +55,21 @@ p {
     font-family: 'Press Start 2P', monospace;
     color: white;
     font-size: 1vw;
-    line-height: 1.5;
+    line-height: 1.25;
 }
 
-#player1controls {
-
-}
-
-#player2controls {
+#player1controls, #player2controls {
+    padding-top: 10px;
+    padding-left: 40px;
+    padding-right: 40px;
+    display: inline-block;
     
+}
+
+#controls {
+    height: auto;
+    width: auto;
+    transform: scale(.7);
 }
 
 #container {
