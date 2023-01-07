@@ -6,7 +6,7 @@
 
 const game = document.getElementById('canvas')
 
-//grabs the background color
+//grabs the container background color
 const background = document.getElementById('container').style.backgroundColor
 
 // set player wins to 0
@@ -22,74 +22,134 @@ const ctx = game.getContext('2d')
 game.setAttribute('width', getComputedStyle(game)['width'])
 game.setAttribute('height', getComputedStyle(game)['height'])
 
-game.height = 600   
-
-
+game.height = 600
 // class for fencers
 
 class Fencer {
-    constructor(x, y, width, height, color) {
+    constructor(x, y, width, height, imageSrc, scale, offset = {x: 0, y: 0}, sprites) {
         this.x = x
         this.y = y
         this.width = width
         this.height = height
-        this.color = color
         this.health = 100
         this.invul = false
+        this.image = new Image()
+        this.image.src = imageSrc
+        this.scale = scale
+        this.offset = offset
+        this.sprites = sprites
+        for (const sprite in this.sprites) {
+            sprites[sprite].image = new Image()
+            sprites[sprite].image.src = sprites[sprite].imageSrc
+        }
+        // console.log(this.sprites)
         this.render = function () {
-            ctx.fillStyle = this.color
+            // ctx.fillStyle = this.color
             ctx.fillRect(this.x, this.y, this.width, this.height)
         }
     }
+        draw() {
+            ctx.drawImage(
+                this.image, 
+                this.x - this.offset.x, 
+                this.y - this.offset.y, 
+                this.image.width * this.scale, 
+                this.image.height * this.scale)
+            }
+        update() {
+            this.draw()
+            }
 }
 
-// class for sword
+
+// class for swords
 
 class Sword {
-    constructor (x, y, width, height, color) {
+    constructor (x, y, width, height) {
         this.x = x
         this.y = y
         this.width = width
         this.height = height
-        this.color = color
         this.thrust = false
         this.render = function () {
-            ctx.fillstyle = this.color
+            // ctx.fillstyle = this.color
             ctx.fillRect(this.x, this.y, this.width, this.height)
         }
     }
 }
+
 
 // SOUNDS ----------------------------------------------------  
 
 function sound(src) {
-    this.sound = document.createElement("audio");
-    this.sound.src = src;
-    this.sound.setAttribute("preload", "auto");
-    this.sound.setAttribute("controls", "none");
-    this.sound.style.display = "none";
-    document.body.appendChild(this.sound);
+    this.sound = document.createElement('audio')
+    this.sound.src = src
+    this.sound.setAttribute('preload', 'auto')
+    this.sound.setAttribute('controls', 'none')
+    this.sound.style.display = 'none'
+    this.sound.volume = 1
+    document.body.appendChild(this.sound)
     this.play = function(){
-        this.sound.play();
+        this.sound.play()
     }
     this.stop = function(){
-        this.sound.pause();
+        this.sound.pause()
     }
 }
-
 // Define the sounds used in the game
-const sndParry = new sound('sounds/parry.wav')
-// const sndSwish = new sound('sounds/Swish2.wav')
-const sndHit = new sound('sounds/Hit.wav')
+const sndParry = new sound('sounds/Parry2.wav')
+// const sndSwipe = new sound('sounds/Swipe.wav')
+const sndHit = new sound('sounds/Hit1.wav')
+const sndFlourish1 = new sound('sounds/Flourish1.wav')
+const sndFlourish2 = new sound('sounds/Flourish2.wav')
+const sndTheme = new sound('sounds/Theme2.mp3')
+const sndTimer1 = new sound('sounds/Timer1.wav')
+const sndTimer2 = new sound('sounds/Timer2.wav')
+const sndCrowd = new sound('sounds/Crowd2.wav')
+
+// PLAYERS -----------------------------------------
 
 // creates the players and the swords
+const player1 = new Fencer(
+    300, 
+    450, 
+    80, 
+    120, 
+    './img/Fencer.png', 
+    2, 
+    offset = {x: 12, y: 65},
+    sprites = {
+    idle: {
+        imageSrc: './img/Fencer.png'
+    },
+    thrust: {
+        imageSrc: './img/FencerThrust.png'
+    },
+    defend: {
+        imageSrc: './img/FencerDefend.png'
+    }})
 
-const player1 = new Fencer(300, 450, 80, 120, 'black')
-const player1Sword = new Sword(300, 490, 100, 20, 'black')
+const player2 = new Fencer(
+    900, 
+    450, 
+    80, 
+    120, 
+    './img/Fencer2.png', 
+    2, 
+    offset = {x: 210, y: 65},
+    sprites = {
+        idle: {
+            imageSrc: './img/Fencer2.png'
+        },
+        thrust: {
+            imageSrc: './img/FencerThrust2.png'
+        },
+        defend: {
+            imageSrc: './img/FencerDefend2.png'
+        }})
 
-const player2 = new Fencer(900, 450, 80, 120, 'brown')
-const player2Sword = new Sword(880, 511, 100, 20, 'brown')
-
+const player2Sword = new Sword(880, 511, 100, 20)
+const player1Sword = new Sword(300, 490, 100, 20)
 
 
 // MOVEMENT HANDLER -------------------------------
@@ -130,16 +190,18 @@ const attackHandler = (e) => {
     switch (e.keyCode) {
         // causes the swords to thrust when pushed.
         case !isRepeating && 87:
-            player1Sword.x += 70
+            player1Sword.x += 125
             player1Sword.thrust = true
+            player1.image = player1.sprites.thrust.image
             // Play swish sound
-            // sndSwish.play()
+            // sndSwipe.play()
         break
         case !isRepeating && 73:
-            player2Sword.x -= 70
+            player2Sword.x -= 125
             player2Sword.thrust = true
+            player2.image = player2.sprites.thrust.image
             // Play swish sound
-            // sndSwish.play()
+            // sndSwipe.play()
         break
         // causes the swords to parry when pushed.
         case !isRepeating && 83:
@@ -148,23 +210,46 @@ const attackHandler = (e) => {
             player1Sword.width = 20
             player1Sword.height = 100
             player1.invul = true
+            player1.image = player1.sprites.defend.image
         break
         case !isRepeating && 75:
             player2Sword.y -= 50
             player2Sword.width = 20
             player2Sword.height = 100
             player2.invul = true
+            player2.image = player2.sprites.defend.image
         break
     }   
 }
 
 const swordReturn = function (key) {
     // returns swords after attack
-    if (key.toLowerCase() == 'w') { player1Sword.x -= 70, player1Sword.thrust = false }
-    if (key.toLowerCase() == 'i') { player2Sword.x += 70, player2Sword.thrust = false }
+    if (key.toLowerCase() == 'w') { 
+        player1Sword.x -= 125, 
+        player1Sword.thrust = false, 
+        player1.image = player1.sprites.idle.image
+    }
+    if (key.toLowerCase() == 'i') { 
+        player2Sword.x += 125, 
+        player2Sword.thrust = false, 
+        player2.image = player2.sprites.idle.image
+    }
     // returns swords after parry
-    if (key.toLowerCase() == 's') { player1Sword.x -= 80, player1Sword.y += 20, player1Sword.width = 100, player1Sword.height = 20, player1.invul = false}
-    if (key.toLowerCase() == 'k') { player2Sword.y += 50, player2Sword.width = 100, player2Sword.height = 20, player2.invul = false}   
+    if (key.toLowerCase() == 's') { 
+        player1Sword.x -= 80, 
+        player1Sword.y += 20, 
+        player1Sword.width = 100, 
+        player1Sword.height = 20, 
+        player1.invul = false, 
+        player1.image = player1.sprites.idle.image
+    }
+    if (key.toLowerCase() == 'k') { 
+        player2Sword.y += 50, 
+        player2Sword.width = 100, 
+        player2Sword.height = 20, 
+        player2.invul = false, 
+        player2.image = player2.sprites.idle.image
+    }   
 }
 
 
@@ -194,10 +279,10 @@ const detectHit1 = () => {
         && player2.invul == false
         // makes sure player is attacking so there is no hit when players simply walk into each other.
         && player1Sword.thrust == true ) {
-            // sndHit.play()
+            sndHit.play()
             // console.log('Player 2 HIT!')
-            player2.x += 100
-            player2Sword.x += 100
+            player2.x += 130
+            player2Sword.x += 130
             player2.health -= 20
             // flash screen red when there is a hit
             document.getElementById('container').style.backgroundColor = 'red'
@@ -248,10 +333,10 @@ const detectHit2 = () => {
     && player2Sword.y + player2Sword.height > player1.y
     && player1.invul == false
     && player2Sword.thrust == true ) {
-        // sndHit.play()
+        sndHit.play()
         // console.log('Player 1 HIT!')
-        player1.x -= 100
-        player1Sword.x -= 100
+        player1.x -= 130
+        player1Sword.x -= 130
         player1.health -= 20
         // flash screen red when there is a hit
         document.getElementById('container').style.backgroundColor = 'red'
@@ -276,32 +361,30 @@ const checkOffStage = (player) => {
 
 // GAME LOOP ---------------------------------------
 
+
 const gameLoop = () => {
     
     // clear the screen
     ctx.clearRect(0,0, game.width, game.height)
 
+    document.getElementById('Player1Health').style.width = player1.health + '%'
     // Update player 2 health bar
     document.getElementById('Player2Health').style.width = player2.health + '%'
     // Update player 1 health bar
-    document.getElementById('Player1Health').style.width = player1.health + '%'
+
+    // render player1
+    player1.update()
+    // render player2
+    player2.update()
 
     // Update player 1 points
     document.getElementById('player1wins').innerText = 'Player 1 Points: ' + player1Wins
     // Update player 2 points
     document.getElementById('player2wins').innerText = 'Player 2 Points: ' + player2Wins
 
-    // Old method of displaying player health as a number
-    // document.getElementById('player1status').innerText = `* Player 1 - ${player1.health} *`
-    // document.getElementById('player1status').style.color = player1.color
-    
-    // document.getElementById('player2status').innerText = `* Player 2 - ${player2.health} *`
-    // document.getElementById('player2status').style.color = player2.color
-
     if (player1.health > 0) {
-    // render player1 and sword
-    player1.render()
-    player1Sword.render()
+    // player1.render()
+    // player1Sword.render()
     detectHit1()
     checkOffStage(player1)
     } 
@@ -309,24 +392,27 @@ const gameLoop = () => {
     else {
         player2Wins += 1
         if (player2Wins == 3) {
+            sndCrowd.play()
+            sndFlourish2.play()
             stopGameLoop()
             document.getElementById('msg').innerText = 'Player 2 Wins!'
             player1Wins = 0
             player2Wins = 0
-            // document.getElementById('container').style.backgroundColor = player2.color
         } else {
-        stopGameLoop()
-        document.getElementById('msg').innerText = 'Point for Player 2!'
-        setTimeout(()=> {
+            document.getElementById('Player1Health').style.width = player1.health + '%'
+            sndCrowd.play()
+            sndFlourish1.play()
+            stopGameLoop()
+            document.getElementById('msg').innerText = 'Point for Player 2!'
+            setTimeout(()=> {
             resetGame()
             }
             , 1500)
         }
     }
     if (player2.health > 0) {
-    // render player2 and sword
-    player2.render()
-    player2Sword.render()
+    // player2.render()
+    // player2Sword.render()
     detectHit2()
     checkOffStage(player2)
     } 
@@ -334,15 +420,20 @@ const gameLoop = () => {
     else {
         player1Wins += 1
         if (player1Wins == 3) {
+            sndCrowd.play()
+            document.getElementById('Player2Health').style.width = player2.health + '%'
+            sndFlourish2.play()
             stopGameLoop()
             document.getElementById('msg').innerText = 'Player 1 Wins!'
             player1Wins = 0
             player2Wins = 0
-            // document.getElementById('container').style.backgroundColor = player1.color
         } else {
-        stopGameLoop()
-        document.getElementById('msg').innerText = 'Point for Player 1!'
-        setTimeout(()=> {
+            sndCrowd.play()
+            document.getElementById('Player2Health').style.width = player2.health + '%'
+            sndFlourish1.play()
+            stopGameLoop()
+            document.getElementById('msg').innerText = 'Point for Player 1!'
+            setTimeout(()=> {
             resetGame()
             }
             , 1500)
@@ -350,57 +441,71 @@ const gameLoop = () => {
     }      
 }
 
+const music = (e) => {
+    switch (e.keyCode) {
+        case 77:
+            sndTheme.play()
+            break
+    }
+}
+
 // EVENT LISTENERS --------------------------
 
 document.addEventListener('keydown', movementHandler)
+document.addEventListener('keydown', music)
 document.addEventListener('keydown', attackHandler)
 
 document.addEventListener('keyup', (e) => {
     if (['w', 's', 'i', 'k'].includes(e.key)) {
         swordReturn(e.key)
         // clears list of pressed keys when key is released.
-        pressedKeys[e.keyCode] = false;
+        pressedKeys[e.keyCode] = false
         
     }
 })
+
+
 
 // INTERVAL ----------------------------------
 
 let gameInterval
 
-const stopGameLoop = () => { clearInterval(gameInterval)}
+const stopGameLoop = () => { 
+    clearInterval(gameInterval)
+}
 
 const runGameLoop = () => { 
-    gameInterval = setInterval(gameLoop, 25)
+    gameInterval = setInterval(gameLoop, 20)
     reset.addEventListener('click', resetGame)
 }
 
-// Game starts on button press so this is not necessary
-// document.addEventListener('DOMContentLoaded', runGameLoop)
-
 // Stops current loop, counts down, and then starts a new round
 const resetGame = () => {
+    sndTheme.stop()
     stopGameLoop()
     countDown()
-    // setTimeout(gameDelay, 3000)
 }
 
 // Countdown timer to starting a new game
 timeLeft = 4;
 const countDown = () => {
-	timeLeft--;
+	timeLeft--
 	document.getElementById('msg').innerText = timeLeft
 	if (timeLeft > 0) {
-		setTimeout(countDown, 1000);
+        sndTimer1.play()
+		setTimeout(countDown, 1000)
 	} else {
+        sndTimer2.play()
         document.getElementById('msg').innerText = 'En garde!'
         timeLeft = 4
-        gameDelay()
+        newRound()
     }
 }
 
 // The rest of the new round actions after the delay
-const gameDelay = () => {
+const newRound = () => {
+    document.getElementById('mainscreen').style.visibility = 'hidden'
+    document.getElementById('canvas').style.backgroundImage = 'url("../img/StadiumBG.png")'
     document.getElementById('container').style.backgroundColor = background
     // console.log('clicked reset')
     // document.getElementById('msg').innerText = 'En garde!'
@@ -414,5 +519,8 @@ const gameDelay = () => {
     reset.removeEventListener('click', resetGame)
     runGameLoop()
 }
+
+addEventListener('DOMContentLoaded', () => {
+});
 
 reset.addEventListener('click', resetGame)
