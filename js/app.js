@@ -87,6 +87,7 @@ function sound(src) {
     this.sound.setAttribute('preload', 'auto')
     this.sound.setAttribute('controls', 'none')
     this.sound.style.display = 'none'
+    this.sound.volume = 1
     document.body.appendChild(this.sound)
     this.play = function(){
         this.sound.play()
@@ -96,14 +97,15 @@ function sound(src) {
     }
 }
 // Define the sounds used in the game
-const sndParry = new sound('sounds/Parry1.wav')
-// const sndSwish = new sound('sounds/Swish2.wav')
+const sndParry = new sound('sounds/Parry2.wav')
+// const sndSwipe = new sound('sounds/Swipe.wav')
 const sndHit = new sound('sounds/Hit1.wav')
 const sndFlourish1 = new sound('sounds/Flourish1.wav')
 const sndFlourish2 = new sound('sounds/Flourish2.wav')
-const sndTheme = new sound('sounds/Theme.mp3')
+const sndTheme = new sound('sounds/Theme2.mp3')
 const sndTimer1 = new sound('sounds/Timer1.wav')
 const sndTimer2 = new sound('sounds/Timer2.wav')
+const sndCrowd = new sound('sounds/Crowd2.wav')
 
 // PLAYERS -----------------------------------------
 
@@ -192,14 +194,14 @@ const attackHandler = (e) => {
             player1Sword.thrust = true
             player1.image = player1.sprites.thrust.image
             // Play swish sound
-            // sndSwish.play()
+            // sndSwipe.play()
         break
         case !isRepeating && 73:
             player2Sword.x -= 125
             player2Sword.thrust = true
             player2.image = player2.sprites.thrust.image
             // Play swish sound
-            // sndSwish.play()
+            // sndSwipe.play()
         break
         // causes the swords to parry when pushed.
         case !isRepeating && 83:
@@ -390,12 +392,15 @@ const gameLoop = () => {
     else {
         player2Wins += 1
         if (player2Wins == 3) {
+            sndCrowd.play()
             sndFlourish2.play()
             stopGameLoop()
             document.getElementById('msg').innerText = 'Player 2 Wins!'
             player1Wins = 0
             player2Wins = 0
         } else {
+            document.getElementById('Player1Health').style.width = player1.health + '%'
+            sndCrowd.play()
             sndFlourish1.play()
             stopGameLoop()
             document.getElementById('msg').innerText = 'Point for Player 2!'
@@ -415,12 +420,16 @@ const gameLoop = () => {
     else {
         player1Wins += 1
         if (player1Wins == 3) {
+            sndCrowd.play()
+            document.getElementById('Player2Health').style.width = player2.health + '%'
             sndFlourish2.play()
             stopGameLoop()
             document.getElementById('msg').innerText = 'Player 1 Wins!'
             player1Wins = 0
             player2Wins = 0
         } else {
+            sndCrowd.play()
+            document.getElementById('Player2Health').style.width = player2.health + '%'
             sndFlourish1.play()
             stopGameLoop()
             document.getElementById('msg').innerText = 'Point for Player 1!'

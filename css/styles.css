@@ -58,6 +58,14 @@ p {
     line-height: 1.5;
 }
 
+#player1controls {
+
+}
+
+#player2controls {
+    
+}
+
 #container {
     max-width: 80em;
     max-height: 50em;
