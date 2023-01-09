@@ -505,7 +505,7 @@ const countDown = () => {
 // The rest of the new round actions after the delay
 const newRound = () => {
     document.getElementById('mainscreen').style.visibility = 'hidden'
-    document.getElementById('canvas').style.backgroundImage = 'url("../img/StadiumBG.png")'
+    document.getElementById('canvas').style.backgroundImage = 'url("https://i.imgur.com/r61MxOT.png")'
     document.getElementById('container').style.backgroundColor = background
     // console.log('clicked reset')
     // document.getElementById('msg').innerText = 'En garde!'
