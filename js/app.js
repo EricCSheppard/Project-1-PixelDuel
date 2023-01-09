@@ -148,8 +148,8 @@ const player2 = new Fencer(
             imageSrc: './img/FencerDefend2.png'
         }})
 
-const player2Sword = new Sword(880, 511, 100, 20)
-const player1Sword = new Sword(300, 490, 100, 20)
+const player2Sword = new Sword(880, 511, 90, 20)
+const player1Sword = new Sword(300, 490, 90, 20)
 
 
 // MOVEMENT HANDLER -------------------------------
@@ -281,8 +281,8 @@ const detectHit1 = () => {
         && player1Sword.thrust == true ) {
             sndHit.play()
             // console.log('Player 2 HIT!')
-            player2.x += 130
-            player2Sword.x += 130
+            player2.x += 155
+            player2Sword.x += 155
             player2.health -= 20
             // flash screen red when there is a hit
             document.getElementById('container').style.backgroundColor = 'red'
@@ -317,10 +317,10 @@ const detectHit1 = () => {
         && player1.x + player1.width > player2.x
         && player1.y < player2.y + player2.height
         && player1.y + player1.height > player2.y) {
-            player1.x -= 70
-            player1Sword.x -= 70
-            player2.x += 70
-            player2Sword.x += 70
+            player1.x -= 80
+            player1Sword.x -= 80
+            player2.x += 80
+            player2Sword.x += 80
         }
 }
 
@@ -335,8 +335,8 @@ const detectHit2 = () => {
     && player2Sword.thrust == true ) {
         sndHit.play()
         // console.log('Player 1 HIT!')
-        player1.x -= 130
-        player1Sword.x -= 130
+        player1.x -= 155
+        player1Sword.x -= 155
         player1.health -= 20
         // flash screen red when there is a hit
         document.getElementById('container').style.backgroundColor = 'red'
@@ -475,7 +475,7 @@ const stopGameLoop = () => {
 }
 
 const runGameLoop = () => { 
-    gameInterval = setInterval(gameLoop, 20)
+    gameInterval = setInterval(gameLoop, 30)
     reset.addEventListener('click', resetGame)
 }
 
@@ -514,7 +514,7 @@ const newRound = () => {
     player1Sword.x = 300
     player2.health = 100
     player2.x = 900
-    player2Sword.x = 880
+    player2Sword.x = 890
     pressedKeys = []
     reset.removeEventListener('click', resetGame)
     runGameLoop()
