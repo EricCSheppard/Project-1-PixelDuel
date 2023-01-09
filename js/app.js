@@ -113,7 +113,7 @@ const sndCrowd = new sound('sounds/Crowd2.wav')
 const player1 = new Fencer(
     300, 
     450, 
-    80, 
+    75, 
     120, 
     './img/Fencer.png', 
     2, 
@@ -132,7 +132,7 @@ const player1 = new Fencer(
 const player2 = new Fencer(
     900, 
     450, 
-    80, 
+    75, 
     120, 
     './img/Fencer2.png', 
     2, 
@@ -205,7 +205,7 @@ const attackHandler = (e) => {
         break
         // causes the swords to parry when pushed.
         case !isRepeating && 83:
-            player1Sword.x += 80
+            player1Sword.x += 70
             player1Sword.y -= 20
             player1Sword.width = 20
             player1Sword.height = 100
@@ -236,7 +236,7 @@ const swordReturn = function (key) {
     }
     // returns swords after parry
     if (key.toLowerCase() == 's') { 
-        player1Sword.x -= 80, 
+        player1Sword.x -= 70, 
         player1Sword.y += 20, 
         player1Sword.width = 100, 
         player1Sword.height = 20, 
@@ -384,7 +384,7 @@ const gameLoop = () => {
 
     if (player1.health > 0) {
     // player1.render()
-    // player1Sword.render()
+    // player1Sword .render()
     detectHit1()
     checkOffStage(player1)
     } 
@@ -514,7 +514,7 @@ const newRound = () => {
     player1Sword.x = 300
     player2.health = 100
     player2.x = 900
-    player2Sword.x = 890
+    player2Sword.x = 880
     pressedKeys = []
     reset.removeEventListener('click', resetGame)
     runGameLoop()
