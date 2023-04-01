@@ -59,18 +59,17 @@ p {
 }
 
 #player1controls, #player2controls {
+    position:relative;
     padding-top: 10px;
     padding-left: 25px;
     padding-right: 25px;
     display: inline-block;
-    
 }
 
 #controls {
+    width: 50%;
     height: auto;
-    width: 100%;
-    margin: auto;
-    transform: scale(.7);
+    object-fit: contain;
 }
 
 #container {
