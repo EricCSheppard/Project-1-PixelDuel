@@ -148,8 +148,8 @@ const player2 = new Fencer(
             imageSrc: './img/FencerDefend2.png'
         }})
 
-const player2Sword = new Sword(880, 511, 90, 20)
-const player1Sword = new Sword(300, 490, 90, 20)
+const player2Sword = new Sword(863, 511, 90, 20)
+const player1Sword = new Sword(325, 490, 90, 20)
 
 
 // MOVEMENT HANDLER -------------------------------
@@ -398,6 +398,8 @@ const gameLoop = () => {
             document.getElementById('msg').innerText = 'Player 2 Wins!'
             player1Wins = 0
             player2Wins = 0
+            document.getElementById('reset').innerText = 'Reset'
+            reset.addEventListener('click', resetGame)
         } else {
             document.getElementById('Player1Health').style.width = player1.health + '%'
             sndCrowd.play()
@@ -427,6 +429,8 @@ const gameLoop = () => {
             document.getElementById('msg').innerText = 'Player 1 Wins!'
             player1Wins = 0
             player2Wins = 0
+            document.getElementById('reset').innerText = 'Reset'
+            reset.addEventListener('click', resetGame)
         } else {
             sndCrowd.play()
             document.getElementById('Player2Health').style.width = player2.health + '%'
@@ -476,11 +480,13 @@ const stopGameLoop = () => {
 
 const runGameLoop = () => { 
     gameInterval = setInterval(gameLoop, 30)
-    reset.addEventListener('click', resetGame)
+    
 }
 
 // Stops current loop, counts down, and then starts a new round
 const resetGame = () => {
+    document.getElementById('reset').innerText = 'Fight!'
+    reset.removeEventListener('click', resetGame)
     sndTheme.stop()
     stopGameLoop()
     countDown()
@@ -504,6 +510,7 @@ const countDown = () => {
 
 // The rest of the new round actions after the delay
 const newRound = () => {
+    reset.removeEventListener('click', resetGame)
     document.getElementById('mainscreen').style.visibility = 'hidden'
     document.getElementById('canvas').style.backgroundImage = 'url("https://i.imgur.com/r61MxOT.png")'
     document.getElementById('container').style.backgroundColor = background
@@ -511,12 +518,11 @@ const newRound = () => {
     // document.getElementById('msg').innerText = 'En garde!'
     player1.health = 100
     player1.x = 300
-    player1Sword.x = 300
+    player1Sword.x = 325
     player2.health = 100
     player2.x = 900
-    player2Sword.x = 880
+    player2Sword.x = 863
     pressedKeys = []
-    reset.removeEventListener('click', resetGame)
     runGameLoop()
 }
 
