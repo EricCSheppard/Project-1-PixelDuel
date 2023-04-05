@@ -84,11 +84,46 @@ const sndHit = new sound('sounds/Hit.wav')
 
 // creates the players and the swords
 
-const player1 = new Fencer(300, 450, 80, 120, 'black')
-const player1Sword = new Sword(300, 490, 100, 20, 'black')
+const player1 = new Fencer(
+    300, 
+    450, 
+    75, 
+    120, 
+    './img/Fencer.png', 
+    2, 
+    offset = {x: 12, y: 65},
+    sprites = {
+    idle: {
+        imageSrc: './img/Fencer.png'
+    },
+    thrust: {
+        imageSrc: './img/FencerThrust.png'
+    },
+    defend: {
+        imageSrc: './img/FencerDefend.png'
+    }})
 
-const player2 = new Fencer(900, 450, 80, 120, 'brown')
-const player2Sword = new Sword(880, 511, 100, 20, 'brown')
+const player2 = new Fencer(
+    900, 
+    450, 
+    75, 
+    120, 
+    './img/Fencer2.png', 
+    2, 
+    offset = {x: 210, y: 65},
+    sprites = {
+        idle: {
+            imageSrc: './img/Fencer2.png'
+        },
+        thrust: {
+            imageSrc: './img/FencerThrust2.png'
+        },
+        defend: {
+            imageSrc: './img/FencerDefend2.png'
+        }})
+
+const player2Sword = new Sword(863, 511, 90, 20)
+const player1Sword = new Sword(325, 490, 90, 20)
 
 
 
@@ -143,7 +178,7 @@ const attackHandler = (e) => {
         break
         // causes the swords to parry when pushed.
         case !isRepeating && 83:
-            player1Sword.x += 80
+            player1Sword.x += 70
             player1Sword.y -= 20
             player1Sword.width = 20
             player1Sword.height = 100
@@ -163,8 +198,22 @@ const swordReturn = function (key) {
     if (key.toLowerCase() == 'w') { player1Sword.x -= 70, player1Sword.thrust = false }
     if (key.toLowerCase() == 'i') { player2Sword.x += 70, player2Sword.thrust = false }
     // returns swords after parry
-    if (key.toLowerCase() == 's') { player1Sword.x -= 80, player1Sword.y += 20, player1Sword.width = 100, player1Sword.height = 20, player1.invul = false}
-    if (key.toLowerCase() == 'k') { player2Sword.y += 50, player2Sword.width = 100, player2Sword.height = 20, player2.invul = false}   
+    if (key.toLowerCase() == 's') { 
+        player1Sword.x -= 70, 
+        player1Sword.y += 20, 
+        player1Sword.width = 100, 
+        player1Sword.height = 20, 
+        player1.invul = false, 
+        player1.image = player1.sprites.idle.image
+    }
+    if (key.toLowerCase() == 'k') { 
+        player2Sword.y += 50, 
+        player2Sword.width = 100, 
+        player2Sword.height = 20, 
+        player2.invul = false, 
+        player2.image = player2.sprites.idle.image
+    }   
+
 }
 
 
@@ -196,8 +245,9 @@ const detectHit1 = () => {
         && player1Sword.thrust == true ) {
             // sndHit.play()
             // console.log('Player 2 HIT!')
-            player2.x += 100
-            player2Sword.x += 100
+            player2.x += 155
+            player2Sword.x += 155
+
             player2.health -= 20
             // flash screen red when there is a hit
             document.getElementById('container').style.backgroundColor = 'red'
@@ -232,10 +282,10 @@ const detectHit1 = () => {
         && player1.x + player1.width > player2.x
         && player1.y < player2.y + player2.height
         && player1.y + player1.height > player2.y) {
-            player1.x -= 70
-            player1Sword.x -= 70
-            player2.x += 70
-            player2Sword.x += 70
+            player1.x -= 80
+            player1Sword.x -= 80
+            player2.x += 80
+            player2Sword.x += 80
         }
 }
 
@@ -250,8 +300,9 @@ const detectHit2 = () => {
     && player2Sword.thrust == true ) {
         // sndHit.play()
         // console.log('Player 1 HIT!')
-        player1.x -= 100
-        player1Sword.x -= 100
+
+        player1.x -= 155
+        player1Sword.x -= 155
         player1.health -= 20
         // flash screen red when there is a hit
         document.getElementById('container').style.backgroundColor = 'red'
@@ -299,9 +350,9 @@ const gameLoop = () => {
     // document.getElementById('player2status').style.color = player2.color
 
     if (player1.health > 0) {
-    // render player1 and sword
-    player1.render()
-    player1Sword.render()
+    // player1.render()
+    // player1Sword .render()
+
     detectHit1()
     checkOffStage(player1)
     } 
@@ -313,7 +364,9 @@ const gameLoop = () => {
             document.getElementById('msg').innerText = 'Player 2 Wins!'
             player1Wins = 0
             player2Wins = 0
-            // document.getElementById('container').style.backgroundColor = player2.color
+            document.getElementById('reset').innerText = 'Reset'
+            reset.addEventListener('click', resetGame)
+
         } else {
         stopGameLoop()
         document.getElementById('msg').innerText = 'Point for Player 2!'
@@ -338,7 +391,9 @@ const gameLoop = () => {
             document.getElementById('msg').innerText = 'Player 1 Wins!'
             player1Wins = 0
             player2Wins = 0
-            // document.getElementById('container').style.backgroundColor = player1.color
+            document.getElementById('reset').innerText = 'Reset'
+            reset.addEventListener('click', resetGame)
+
         } else {
         stopGameLoop()
         document.getElementById('msg').innerText = 'Point for Player 1!'
@@ -371,8 +426,9 @@ let gameInterval
 const stopGameLoop = () => { clearInterval(gameInterval)}
 
 const runGameLoop = () => { 
-    gameInterval = setInterval(gameLoop, 25)
-    reset.addEventListener('click', resetGame)
+    gameInterval = setInterval(gameLoop, 30)
+    
+
 }
 
 // Game starts on button press so this is not necessary
@@ -380,6 +436,11 @@ const runGameLoop = () => {
 
 // Stops current loop, counts down, and then starts a new round
 const resetGame = () => {
+
+    document.getElementById('reset').innerText = 'Fight!'
+    reset.removeEventListener('click', resetGame)
+    sndTheme.stop()
+
     stopGameLoop()
     countDown()
     // setTimeout(gameDelay, 3000)
@@ -400,18 +461,22 @@ const countDown = () => {
 }
 
 // The rest of the new round actions after the delay
-const gameDelay = () => {
+
+const newRound = () => {
+    reset.removeEventListener('click', resetGame)
+    document.getElementById('mainscreen').style.visibility = 'hidden'
+    document.getElementById('canvas').style.backgroundImage = 'url("https://i.imgur.com/r61MxOT.png")'
+
     document.getElementById('container').style.backgroundColor = background
     // console.log('clicked reset')
     // document.getElementById('msg').innerText = 'En garde!'
     player1.health = 100
     player1.x = 300
-    player1Sword.x = 300
+    player1Sword.x = 325
     player2.health = 100
     player2.x = 900
-    player2Sword.x = 880
+    player2Sword.x = 863
     pressedKeys = []
-    reset.removeEventListener('click', resetGame)
     runGameLoop()
 }
 
