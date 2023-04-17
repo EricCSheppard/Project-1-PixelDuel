@@ -6,6 +6,14 @@
 
 Pixel duel is a lo-fi fencing game created as an homage to old freeware games of the early DOS gaming era.  It features a simultaneous 2 player VS mode played side by side on a single keyboard.  The gameplay is enhanced by an 8-bit inspired sountrack and synthesized sound effects.  Duel it out with a friend to see who is the champion!
 
+## Screenshots
+---
+Start Screen
+![Main Screen](./img/PixelDuelMain.png)
+
+Fight Screen
+![Fight Screen](./img/PixelDuelFight.png)
+
 
 ## Technologies used
 ---
