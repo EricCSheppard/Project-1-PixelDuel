@@ -2,27 +2,22 @@ body {
     background-color: #222
 }
 
-h1 {
+h1, h2 {
     font-family: 'Press Start 2P', monospace;
     /* font-family: monospace; */
     color: rgb(99, 165, 247);
     font-size: 1vw;
 }
 
-h2 {
-    font-family: 'Press Start 2P', monospace;
-    /* font-family: monospace; */
-    color: white;
-    font-size: 1vw;
-}
-
-#canvas {
+canvas {
+    background-image: url('../img/StadiumBG.png');
     background-position: center;
     background-size: 100% auto;
     background-color: #222;
     width: 100%;
     height: 100%;
 }
+
 
 #title {
     font-family: 'Press Start 2P', monospace;
@@ -88,7 +83,7 @@ p {
     text-align: center;
     }
 
-#top-left {
+#top-left, #top-right {
     grid-area: top-left;
     border:#222 2px solid;
     width: 100%;
@@ -104,6 +99,12 @@ p {
     left: 0;
     right: 0;
 }
+
+/* #Player1HealthBG {
+    background-color: yellow;
+    height: 30px;
+    width: 100%;
+} */
 
 #top-center {
     grid-area: top-center;
@@ -167,10 +168,8 @@ main {
     font-family: 'Press Start 2P', monospace;
     background-color: grey;
     text-align: center;
-    font-size: 1vw;
-    padding: 15px;
-    height: 100% auto;
-    width: 100% auto;
+    height: 50px;
+    width: 100px;
 }
 
 
